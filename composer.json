@@ -1,0 +1,34 @@
+{
+	"name": "able/IO",
+	"version": "1.0",
+	"type": "library",
+	"keywords": ["phpable", "filesystem", "input", "output"],
+	"description": "phpABLE filesystem library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "hacpaka",
+			"email": "hacpaka@eggbe.com"
+		}
+	],
+	"require": {
+		"php": ">=7.2.0",
+		"able/prototypes": "dev-master",
+		"eggbe/helpers": "dev-master"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^7"
+	},
+	"autoload": {
+		"psr-4": {
+			"Able\\IO\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Able\\IO\\Tests\\": "tests/"
+		}
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true
+}
