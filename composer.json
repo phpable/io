@@ -3,7 +3,7 @@
 	"version": "1.0",
 	"type": "library",
 	"keywords": ["phpable", "filesystem", "input", "output"],
-	"description": "phpABLE filesystem library",
+	"description": "phpABLE file-system library",
 	"license": "MIT",
 	"authors": [
 		{
