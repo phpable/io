@@ -11,7 +11,7 @@ use \Able\Prototypes\TStringable;
 
 use \Able\IO\Abstractions\APath;
 
-use \Able\IO\Node;
+use \Able\IO\File;
 use \Able\IO\Directory;
 use PHPUnit\Runner\Exception;
 
@@ -143,11 +143,23 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
-	 * @return Node
+	 * @return File
 	 * @throws \Exception
 	 */
-	public final function toFile(): Node {
-		return new Node($this);
+	public final function toFile(): File {
+		if (!$this->isExists()){
+			throw new \Exception('Given path does not exists!');
+		}
+
+		return new File($this);
+	}
+
+	/**
+	 * @return File
+	 * @throws \Exception
+	 */
+	public final function forceFile(): File {
+		return new File($this);
 	}
 
 	/**
