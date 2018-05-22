@@ -2,9 +2,12 @@
 namespace Able\IO\Abstractions;
 
 use \Able\Prototypes\IStringable;
+use \Able\Prototypes\TStringable;
+
 use \Able\IO\Path;
 
 abstract class ANode implements IStringable {
+	use TStringable;
 
 	/**
 	 * @var Path
