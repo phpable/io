@@ -1,11 +1,10 @@
 <?php
 namespace Able\IO\Abstractions;
 
-use \Eggbe\Prototype\IStringable;
+use \Able\Prototypes\IStringable;
 use \Able\IO\Path;
 
-abstract class ANode
-	implements IStringable {
+abstract class ANode implements IStringable {
 
 	/**
 	 * @var Path
