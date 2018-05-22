@@ -45,4 +45,5 @@ final class Directory extends ANode {
 
 		parent::__construct($Path);
 	}
+
 }

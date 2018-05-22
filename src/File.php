@@ -19,7 +19,7 @@ final class File extends ANode {
 		}
 
 		if (!$Path->isExists()) {
-			if (!$Path->getParent()->toDerectory()->getPath()->isWritable()){
+			if (!$Path->getParent()->isWritable()){
 				throw new \Exception('Path "' . $Path->toString() . '" is not exists or not writable!');
 			}
 
