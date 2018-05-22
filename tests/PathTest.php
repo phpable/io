@@ -1,8 +1,9 @@
 <?php
 namespace Able\Struct\Tests;
 
-use \PHPUnit\Framework\TestCase;
 use \Able\IO\Path;
+use \Eggbe\Helper\Env;
+use \PHPUnit\Framework\TestCase;
 
 class PathTest extends TestCase {
 
@@ -43,6 +44,26 @@ class PathTest extends TestCase {
 
 		while(($file = dirname($file)) != $point){
 			$this->assertEquals($file, (string)($Path = $Path->getParent()));
+		}
+	}
+
+	/**
+	 * @throws \Exception
+	 */
+	public final function testPlatformFeatures(){
+		$Path = new Path();
+
+		foreach (preg_split('/' . preg_quote(DIRECTORY_SEPARATOR, '/')
+			. '+/', Path::removePoint(__FILE__), -1, PREG_SPLIT_NO_EMPTY) as $fragment){
+				$Path->append($fragment);
+		}
+
+		if (Env::name() == Env::EP_UNIX){
+			$this->assertEquals((string)$Path->makeAbsolute(), __FILE__);
+		}
+
+		if (Env::name() == Env::EP_WINDOWS){
+			$this->assertEquals((string)$Path->changePoint(Path::detectPoint(__FILE__)), __FILE__);
 		}
 	}
 }

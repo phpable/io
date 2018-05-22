@@ -11,8 +11,8 @@ class BWindows implements IBehavior {
 	 * @return string|null
 	 */
 	public final static function detectPoint(string $fragment): ?string {
-		return preg_match('/^([A-Z]:)/', $fragment, $Matches)
-			? $Matches[1] . '\\' : null;
+		return preg_match('/^([A-Z]:\\\?)/', $fragment, $Matches)
+			? $Matches[1] : null;
 	}
 
 	/**
@@ -30,10 +30,10 @@ class BWindows implements IBehavior {
 	 * @throws \Exception
 	 */
 	public final function changePoint(Path $Path, string $point): Path {
-		if (!preg_match('/^[A-Z]$/', $point)){
+		if (!preg_match('/^[A-Z]:?\\\?$/', $point)){
 			throw new \Exception('Invalid reference!');
 		}
 
-		return $Path->prepend($point . ':');
+		return $Path->prepend(rtrim($point, ':\\') . ':');
 	}
 }

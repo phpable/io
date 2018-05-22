@@ -40,7 +40,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	 * @throws \Exception
 	 */
 	public final function __construct($args = null){
-		if (!is_null($args) || count($args) > 0){
+		if (!is_null($args) || count(func_get_args()) > 0){
 			$this->append(...func_get_args());
 		}
 	}
@@ -95,7 +95,8 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	 * @return string
 	 */
 	public final function toString() : string {
-		return $this->point . implode(self::DS, $this->Fragments);
+		return implode(self::DS, Arr::unshift($this->Fragments,
+			rtrim($this->point, self::DS)));
 	}
 
 	/**
