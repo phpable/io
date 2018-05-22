@@ -10,7 +10,7 @@ final class File extends ANode {
 	 * @throws \Exception
 	 */
 	public final function __construct(Path $Path) {
-		if ($Path->isDir()) {
+		if ($Path->isDirectory()) {
 			throw new \Exception('Path "' . $Path->toString() . '" is a directory!');
 		}
 
