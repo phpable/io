@@ -35,4 +35,11 @@ final class File extends ANode {
 	public function getContent() : string {
 		return file_get_contents($this->toString());
 	}
+
+	/**
+	 * @return string
+	 */
+	public final function getExtension(): string {
+		return preg_replace('/^.*\./', '', basename($this->getBaseName()));
+	}
 }

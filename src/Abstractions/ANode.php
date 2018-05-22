@@ -40,4 +40,11 @@ abstract class ANode implements IStringable {
 		return clone $this->Path->toPath();
 	}
 
+	/**
+	 * @return string
+	 */
+	public final function getBaseName(): string {
+		return basename((string)$this->Path);
+	}
+
 }
