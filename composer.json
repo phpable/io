@@ -1,5 +1,5 @@
 {
-	"name": "able/IO",
+	"name": "able/io",
 	"version": "1.0",
 	"type": "library",
 	"keywords": ["phpable", "filesystem", "input", "output"],
