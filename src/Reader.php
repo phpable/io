@@ -6,7 +6,10 @@ use \Generator;
 use \Able\IO\File;
 use \Able\IO\Abstractions\IReader;
 
+use \Able\Prototypes\TStringable;
+
 class Reader implements IReader {
+	use TStringable;
 
 	/**
 	 * @var null
@@ -37,5 +40,12 @@ class Reader implements IReader {
 		}finally{
 			fclose($handler);
 		}
+	}
+
+	/**
+	 * @return string
+	 */
+	public final function toString(): string {
+		return $this->File->toString();
 	}
 }

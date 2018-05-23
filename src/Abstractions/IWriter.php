@@ -4,7 +4,9 @@ namespace Able\IO\Abstractions;
 use \Generator;
 use \Able\IO\File;
 
-interface IWriter {
+use \Able\Prototypes\IStringable;
+
+interface IWriter extends IStringable {
 
 	/**
 	 * @param Generator $Input

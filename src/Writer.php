@@ -6,7 +6,10 @@ use \Generator;
 use \Able\IO\File;
 use \Able\IO\Abstractions\IWriter;
 
+use \Able\Prototypes\TStringable;
+
 class Writer implements IWriter {
+	use TStringable;
 
 	/**
 	 * @var null
@@ -37,5 +40,12 @@ class Writer implements IWriter {
 		}finally{
 			fclose($handler);
 		}
+	}
+
+	/**
+	 * @return string
+	 */
+	public final function toString(): string {
+		return $this->File->toString();
 	}
 }
