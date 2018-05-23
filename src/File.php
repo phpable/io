@@ -26,10 +26,18 @@ final class File extends ANode {
 				throw new \Exception('Path "' . $Path->toString() . '" is not exists or not writable!');
 			}
 
-			file_put_contents($Path->toString(), null);
+			file_put_contents($Path->toString(), '');
 		}
 
 		parent::__construct($Path);
+	}
+
+	/**
+	 * @return File
+	 */
+	public final function purge(): File {
+		file_put_contents($this->toString(), '');
+		return $this;
 	}
 
 	/**
