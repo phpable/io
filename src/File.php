@@ -2,6 +2,7 @@
 namespace Able\IO;
 
 use \Able\IO\Abstractions\ANode;
+use \Able\IO\Reader;
 
 final class File extends ANode {
 
@@ -41,5 +42,12 @@ final class File extends ANode {
 	 */
 	public final function getExtension(): string {
 		return preg_replace('/^.*\./', '', basename($this->getBaseName()));
+	}
+
+	/**
+	 * @return Reader
+	 */
+	public final function toReader() : Reader {
+		return new Reader($this);
 	}
 }
