@@ -2,7 +2,9 @@
 namespace Able\IO;
 
 use \Able\IO\Abstractions\ANode;
+
 use \Able\IO\Reader;
+use \Able\IO\Writer;
 
 final class File extends ANode {
 
@@ -49,5 +51,12 @@ final class File extends ANode {
 	 */
 	public final function toReader() : Reader {
 		return new Reader($this);
+	}
+
+	/**
+	 * @return Writer
+	 */
+	public final function toWriter():Writer{
+		return new Writer($this);
 	}
 }
