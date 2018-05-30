@@ -12,7 +12,7 @@ class Reader implements IReader {
 	use TStringable;
 
 	/**
-	 * @var null
+	 * @var File
 	 */
 	private $File = null;
 
