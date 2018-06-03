@@ -3,19 +3,12 @@ namespace Able\IO;
 
 use \Able\IO\File;
 use \Able\IO\Path;
-
 use \Able\IO\Abstractions\IReader;
+use \Able\IO\Abstractions\AAccessor;
 
 use \Able\Reglib\Regexp;
-use \Able\Prototypes\TStringable;
 
-class Buffer implements IReader {
-	use TStringable;
-
-	/**
-	 * @var Path
-	 */
-	private $Path = null;
+class Buffer extends AAccessor implements IReader {
 
 	/**
 	 * @var string
@@ -27,8 +20,9 @@ class Buffer implements IReader {
 	 * @param File $File
 	 */
 	public final function __construct(File $File) {
-		$this->Path = $File->toPath();
 		$this->Buffer = $File->getContent();
+
+		parent::__construct($File);
 	}
 
 	/**
@@ -41,7 +35,7 @@ class Buffer implements IReader {
 	/**
 	 * @return string
 	 */
-	public final function toString(): string {
-		return $this->Path->toString();
+	public final function getContent(){
+		return $this->Buffer;
 	}
 }

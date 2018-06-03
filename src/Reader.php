@@ -1,34 +1,19 @@
 <?php
 namespace Able\IO;
 
-use \Generator;
-
 use \Able\IO\File;
+
 use \Able\IO\Abstractions\IReader;
+use \Able\IO\Abstractions\AAccessor;
 
-use \Able\Prototypes\TStringable;
-
-class Reader implements IReader {
-	use TStringable;
-
-	/**
-	 * @var File
-	 */
-	private $File = null;
+class Reader extends AAccessor
+	implements IReader {
 
 	/**
-	 * Reader constructor.
-	 * @param \Able\IO\File $File
-	 */
-	public final function __construct(File $File) {
-		$this->File = $File;
-	}
-
-	/**
-	 * @return Generator
+	 * @return \Generator
 	 * @throws \Exception
 	 */
-	public final function read(): Generator {
+	public final function read(): \Generator {
 		if (!is_resource($handler = fopen($this->File->toString(), 'r'))){
 			throw new \Exception('Invalid source!');
 		}
@@ -42,10 +27,4 @@ class Reader implements IReader {
 		}
 	}
 
-	/**
-	 * @return string
-	 */
-	public final function toString(): string {
-		return $this->File->toString();
-	}
 }

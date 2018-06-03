@@ -1,28 +1,13 @@
 <?php
 namespace Able\IO;
 
-use \Generator;
-
 use \Able\IO\File;
+
 use \Able\IO\Abstractions\IWriter;
+use \Able\IO\Abstractions\AAccessor;
 
-use \Able\Prototypes\TStringable;
-
-class Writer implements IWriter {
-	use TStringable;
-
-	/**
-	 * @var null
-	 */
-	private $File = null;
-
-	/**
-	 * Reader constructor.
-	 * @param \Able\IO\File $File
-	 */
-	public final function __construct(File $File) {
-		$this->File = $File;
-	}
+class Writer extends AAccessor
+	implements IWriter {
 
 	/**
 	 * @const int
@@ -35,7 +20,7 @@ class Writer implements IWriter {
 	public const WM_SKIP_INDENT = 0b0010;
 
 	/**
-	 * @param Generator $Input
+	 * @param \Generator $Input
 	 * @param int $mode
 	 * @throws \Exception
 	 */
@@ -65,12 +50,5 @@ class Writer implements IWriter {
 		}finally{
 			fclose($handler);
 		}
-	}
-
-	/**
-	 * @return string
-	 */
-	public final function toString(): string {
-		return $this->File->toString();
 	}
 }
