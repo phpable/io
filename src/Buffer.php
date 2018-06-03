@@ -26,6 +26,15 @@ class Buffer extends AAccessor implements IReader {
 	}
 
 	/**
+	 * @param \Closure $Handler
+	 * @return Buffer
+	 */
+	public final function process(\Closure $Handler): Buffer {
+		$this->Buffer = $Handler($this->Buffer);
+		return $this;
+	}
+
+	/**
 	 * @return \Generator
 	 */
 	public final function read(): \Generator {
@@ -35,7 +44,7 @@ class Buffer extends AAccessor implements IReader {
 	/**
 	 * @return string
 	 */
-	public final function getContent(){
+	public final function getContent(): string{
 		return $this->Buffer;
 	}
 }
