@@ -36,7 +36,7 @@ final class Directory extends ANode {
 
 		if (!$Path->isExists()) {
 			if (!is_writable($root = Fs::ppath($Path->toString()))){
-				throw new \Exception('Given path does not exists or not writable!');
+				throw new \Exception(sprintf('Path "%s" does not exists or not writable!', $Path->toString()));
 			}
 
 			mkdir($Path->toString(), $mode == self::AM_INHERIT
