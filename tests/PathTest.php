@@ -2,7 +2,7 @@
 namespace Able\Struct\Tests;
 
 use \Able\IO\Path;
-use \Eggbe\Helper\Env;
+use \Able\Helpers\Env;
 use \PHPUnit\Framework\TestCase;
 
 class PathTest extends TestCase {
@@ -42,7 +42,7 @@ class PathTest extends TestCase {
 		$Path = new Path($file);
 		$point = Path::detectPoint($file);
 
-		while(($file = dirname($file)) != $point){
+		while(!empty(Path::removePoint($file = dirname($file)))){
 			$this->assertEquals($file, (string)($Path = $Path->getParent()));
 		}
 	}

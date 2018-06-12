@@ -11,7 +11,7 @@ class BWindows implements IBehavior {
 	 * @return string|null
 	 */
 	public final static function detectPoint(string $fragment): ?string {
-		return preg_match('/^([A-Z]:\\\?)/', $fragment, $Matches)
+		return preg_match('/^([A-Z]:)\\\?/', $fragment, $Matches)
 			? $Matches[1] : null;
 	}
 

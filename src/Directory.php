@@ -1,7 +1,7 @@
 <?php
 namespace Able\IO;
 
-use \Eggbe\Helper\Fs;
+use \Able\Helpers\Fs;
 use \Able\IO\Abstractions\ANode;
 
 final class Directory extends ANode {

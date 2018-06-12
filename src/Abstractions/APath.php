@@ -1,8 +1,8 @@
 <?php
 namespace Able\IO\Abstractions;
 
-use \Eggbe\Helper\Src;
-use \Eggbe\Helper\Env;
+use \Able\Helpers\Src;
+use \Able\Helpers\Env;
 
 use \Able\Prototypes\ICallable;
 use \Able\Prototypes\TCallable;
@@ -31,6 +31,7 @@ abstract class APath implements ICallable, IBehavior {
 
 		if (!class_exists(self::$BehaviorClass = Src::lns(__NAMESPACE__)
 			. '\Behavior\B' . ucfirst(Env::name()))){
+
 				throw new \Exception('Unsupported environment!');
 		}
 
@@ -61,10 +62,6 @@ abstract class APath implements ICallable, IBehavior {
 	 * @throws \Exception
 	 */
 	public final function call(string $name, array $Args = []) {
-		if (is_null(self::$BehaviorClass)){
-			return forward_static_call([self::class, '__callStatic'], $name, $Args);
-		}
-
 		if (!method_exists($this->getBehavior(), $name)){
 			throw new \Exception('Undefined method ' .  $name);
 		}

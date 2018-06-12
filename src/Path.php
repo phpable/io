@@ -1,8 +1,8 @@
 <?php
 namespace Able\IO;
 
-use \Eggbe\Helper\Arr;
-use \Eggbe\Helper\Str;
+use \Able\Helpers\Arr;
+use \Able\Helpers\Str;
 
 use \Able\Prototypes\IArrayable;
 use \Able\Prototypes\ICountable;
@@ -63,13 +63,14 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	 * @throws \Exception
 	 */
 	public final function append($fragment) : Path {
-		foreach(Arr::simplify(func_get_args()) as $fragment){
+		foreach(array_filter(Arr::simplify(func_get_args())) as $fragment){
 			if (count($this->Fragments) < 1 && is_null($this->point)) {
 				$this->point = self::detectPoint($fragment);
 			}
 
 			$this->Fragments = Arr::append($this->Fragments, preg_split('/' . preg_quote(self::DS, '/')
 				. '/', self::removePoint($fragment), -1, PREG_SPLIT_NO_EMPTY));
+
 		}
 
 		return $this;
@@ -95,8 +96,8 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	 * @return string
 	 */
 	public final function toString() : string {
-		return implode(self::DS, Arr::unshift($this->Fragments,
-			rtrim($this->point, self::DS)));
+		return (!is_null($this->point) ? (rtrim($this->point, self::DS)
+			. self::DS) : '') . Str::join(self::DS, $this->Fragments);
 	}
 
 	/**
