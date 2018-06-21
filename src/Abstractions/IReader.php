@@ -2,9 +2,8 @@
 namespace Able\IO\Abstractions;
 
 use \Generator;
-use \Able\Prototypes\IStringable;
 
-interface IReader extends IStringable {
+interface IReader {
 
 	/**
 	 * @return Generator

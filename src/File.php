@@ -5,7 +5,7 @@ use \Able\IO\Abstractions\ANode;
 
 use \Able\IO\Reader;
 use \Able\IO\Writer;
-use \Able\IO\Buffer;
+use \Able\IO\ReadingBuffer;
 
 final class File extends ANode {
 
@@ -70,9 +70,9 @@ final class File extends ANode {
 	}
 
 	/**
-	 * @return Buffer
+	 * @return ReadingBuffer
 	 */
-	public final function toBuffer(): Buffer {
-		return new Buffer($this);
+	public final function toBuffer(): ReadingBuffer {
+		return new ReadingBuffer($this);
 	}
 }
