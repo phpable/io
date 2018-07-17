@@ -46,4 +46,19 @@ final class Directory extends ANode {
 		parent::__construct($Path);
 	}
 
+	/**
+	 * @return \Generator
+	 * @throws \Exception
+	 */
+	public final function list(): \Generator{
+		$h = opendir($this->toString());
+
+		try{
+			while(($file = readdir($h)) !== false){
+				yield new Path($file);
+			}
+		} finally {
+			closedir($h);
+		}
+	}
 }

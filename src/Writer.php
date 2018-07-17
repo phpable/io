@@ -31,6 +31,7 @@ class Writer extends AAccessor
 
 		try{
 			foreach ($Input as $line) {
+
 				/**
 				 * If the WP_SKIP_INDENT flag is set any leading
 				 * or ending whitespace characters will be removed.

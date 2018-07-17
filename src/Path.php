@@ -210,7 +210,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	/**
 	 * @return bool
 	 */
-	public final function isHidden() : bool {
-		return preg_match('/^\.$/', $this->Fragments[count($this->Fragments ) - 1]) > 0;
+	public final function isDot() : bool {
+		return preg_match('/^\./', Arr::last($this->Fragments)) > 0;
 	}
 }
