@@ -55,7 +55,7 @@ final class Directory extends ANode {
 
 		try{
 			while(($file = readdir($h)) !== false){
-				yield new Path($file);
+				yield new Path($this->toString(), $file);
 			}
 		} finally {
 			closedir($h);
