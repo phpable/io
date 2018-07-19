@@ -3,6 +3,8 @@ namespace Able\IO;
 
 use \Able\IO\File;
 use \Able\IO\Path;
+use \Able\IO\ReadingBuffer;
+
 use \Able\IO\Abstractions\IWriter;
 use \Able\IO\Abstractions\ABuffer;
 
@@ -22,5 +24,12 @@ class WritingBuffer extends ABuffer
 		foreach ($Input as $line){
 			$this->Buffer .= $line;
 		}
+	}
+
+	/**
+	 * @return ReadingBuffer
+	 */
+	public final function toReadingBuffer(){
+		return new ReadingBuffer($this);
 	}
 }

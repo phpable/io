@@ -2,12 +2,14 @@
 namespace Able\IO;
 
 use \Able\IO\Abstractions\ANode;
+use \Able\IO\Abstractions\ISource;
 
 use \Able\IO\Reader;
 use \Able\IO\Writer;
 use \Able\IO\ReadingBuffer;
 
-final class File extends ANode {
+final class File extends ANode
+	implements ISource {
 
 	/**
 	 * @param Path $Path

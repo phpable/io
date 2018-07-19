@@ -1,7 +1,10 @@
 <?php
 namespace Able\IO\Abstractions;
 
-abstract class ABuffer {
+use \Able\IO\Abstractions\ISource;
+
+abstract class ABuffer
+	implements ISource {
 
 	/**
 	 * @var string

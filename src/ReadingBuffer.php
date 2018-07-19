@@ -5,6 +5,7 @@ use \Able\IO\File;
 use \Able\IO\Path;
 
 use \Able\IO\Abstractions\IReader;
+use \Able\IO\Abstractions\ISource;
 use \Able\IO\Abstractions\ABuffer;
 
 use \Able\Reglib\Regexp;
@@ -17,10 +18,10 @@ class ReadingBuffer extends ABuffer
 
 	/**
 	 * Buffer constructor.
-	 * @param File $File
+	 * @param ISource $Source
 	 */
-	public final function __construct(File $File) {
-		$this->Buffer = $File->getContent();
+	public final function __construct(ISource $Source) {
+		$this->Buffer = $Source->getContent();
 	}
 
 	/**
