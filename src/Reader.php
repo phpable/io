@@ -27,4 +27,11 @@ class Reader extends AAccessor
 		}
 	}
 
+	/**
+	 * @return \Generator
+	 * @throws \Exception
+	 */
+	public final function iterate(): \Generator {
+		return $this->read();
+	}
 }

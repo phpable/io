@@ -26,8 +26,17 @@ class ReadingBuffer extends ABuffer
 
 	/**
 	 * @return \Generator
+	 * @throws \Exception
 	 */
 	public final function read(): \Generator {
 		return (new Regexp('/[\n\r]/'))->split($this->Buffer);
+	}
+
+	/**
+	 * @return \Generator
+	 * @throws \Exception
+	 */
+	public final function iterate(): \Generator {
+		return $this->read();
 	}
 }

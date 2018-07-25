@@ -2,8 +2,9 @@
 namespace Able\IO\Abstractions;
 
 use \Generator;
+use \Able\Prototypes\IIteratable;
 
-interface IReader {
+interface IReader extends IIteratable {
 
 	/**
 	 * @return Generator
