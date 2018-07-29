@@ -50,7 +50,7 @@ final class Directory extends ANode {
 	 * @return \Generator
 	 * @throws \Exception
 	 */
-	public final function list(): \Generator{
+	public final function list(): \Generator {
 		$h = opendir($this->toString());
 
 		try{
@@ -59,6 +59,19 @@ final class Directory extends ANode {
 			}
 		} finally {
 			closedir($h);
+		}
+	}
+
+	/**
+	 * @param string $mask
+	 * @return \Generator
+	 * @throws \Exception
+	 */
+	public final function filter(string $mask): \Generator {
+		foreach ($this->list() as $Path){
+			if ($Path->isMatch($mask)){
+				yield $Path;
+			}
 		}
 	}
 }
