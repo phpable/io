@@ -164,6 +164,14 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * @param string $mask
+	 * @return bool
+	 */
+	public final function isMatch(string $mask): bool {
+		return fnmatch($mask, $this->toString());
+	}
+
+	/**
 	 * Determines if a path exists.
 	 *
 	 * @return bool
