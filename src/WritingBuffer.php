@@ -17,6 +17,15 @@ class WritingBuffer extends ABuffer
 	implements IWriter {
 
 	/**
+	 * @param \Generator $Source
+	 * @return WritingBuffer
+	 */
+	public final static function create(\Generator $Source){
+		($Buffer = new static())->write($Source);
+		return $Buffer;
+	}
+
+	/**
 	 * @param \Generator $Input
 	 * @return void
 	 */
