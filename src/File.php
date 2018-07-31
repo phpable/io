@@ -7,6 +7,7 @@ use \Able\IO\Abstractions\ISource;
 use \Able\IO\Reader;
 use \Able\IO\Writer;
 use \Able\IO\ReadingBuffer;
+use \Able\IO\WritingBuffer;
 
 final class File extends ANode
 	implements ISource {
@@ -74,7 +75,15 @@ final class File extends ANode
 	/**
 	 * @return ReadingBuffer
 	 */
-	public final function toBuffer(): ReadingBuffer {
+	public final function toReadingBuffer(): ReadingBuffer {
 		return new ReadingBuffer($this);
+	}
+
+	/**
+	 * @return WritingBuffer
+	 * @throws \Exception
+	 */
+	public final function toWritingBuffer(): WritingBuffer {
+		return WritingBuffer::create($this->toReader()->read());
 	}
 }
