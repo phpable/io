@@ -9,7 +9,7 @@ abstract class ABuffer
 	/**
 	 * @var string
 	 */
-	protected $Buffer = null;
+	protected $Buffer = '';
 
 	/**
 	 * @param callable $Handler
