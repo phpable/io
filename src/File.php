@@ -61,7 +61,7 @@ final class File extends ANode
 	/**
 	 * @return Reader
 	 */
-	public final function toReader() : Reader {
+	public final function toReader(): Reader {
 		return new Reader($this);
 	}
 
