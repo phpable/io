@@ -47,7 +47,7 @@ final class File extends ANode
 	/**
 	 * @return string
 	 */
-	public function getContent() : string {
+	public final function getContent(): string {
 		return file_get_contents($this->toString());
 	}
 
