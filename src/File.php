@@ -59,6 +59,20 @@ final class File extends ANode
 	}
 
 	/**
+	 * @return int
+	 */
+	public function getModifiedTime() {
+		return (int)filemtime($this->toString());
+	}
+
+	/**
+	 * @return int
+	 */
+	public final function getFileSize(){
+		return (int)filesize($this->toString());
+	}
+
+	/**
 	 * @return Reader
 	 */
 	public final function toReader(): Reader {
