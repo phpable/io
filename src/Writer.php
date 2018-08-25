@@ -37,7 +37,7 @@ class Writer extends AAccessor
 				 * or ending whitespace characters will be removed.
 				 */
 				if ($mode & self::WM_SKIP_INDENT){
-					$line = trim($line);
+					$line = ltrim($line);
 				}
 
 				/**

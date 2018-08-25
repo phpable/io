@@ -20,7 +20,7 @@ class Reader extends AAccessor
 
 		try{
 			while(($line = fgets($handler)) !== false){
-				yield $line;
+				yield rtrim($line);
 			}
 		}finally{
 			fclose($handler);

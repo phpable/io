@@ -31,7 +31,7 @@ class WritingBuffer extends ABuffer
 	 */
 	public function write(\Generator $Input): void {
 		foreach ($Input as $line){
-			$this->Buffer .= $line;
+			$this->Buffer .= rtrim($line) . "\n";
 		}
 	}
 
