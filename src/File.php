@@ -45,7 +45,15 @@ final class File extends ANode
 	}
 
 	/**
-	 * @return string
+	 * @param string $content
+	 */
+	public final function append(string $content): void {
+		file_put_contents($this->toString(), $content, LOCK_EX | FILE_APPEND);
+	}
+
+
+	/**
+	 cd ../* @return string
 	 */
 	public final function getContent(): string {
 		return file_get_contents($this->toString());
