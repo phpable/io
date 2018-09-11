@@ -127,7 +127,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	 * @return Directory
 	 * @throws \Exception
 	 */
-	public final function toDerectory() : Directory {
+	public final function toDirectory() : Directory {
 		if (!$this->isExists()){
 			throw new \Exception(sprintf('Path "%s" does not exists!', $this->toString()));
 		}
