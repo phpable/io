@@ -58,7 +58,6 @@ final class File extends ANode
 		file_put_contents($this->toString(), $content, LOCK_EX);
 	}
 
-
 	/**
 	 cd ../* @return string
 	 */
