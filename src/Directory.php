@@ -82,10 +82,10 @@ final class Directory extends ANode {
 	public final function isEmpty(): bool {
 		foreach ($this->list() as $Path){
 			if (!$Path->isDot()){
-				return true;
+				return false;
 			}
 		}
 
-		return false;
+		return true;
 	}
 }
