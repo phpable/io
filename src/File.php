@@ -51,6 +51,13 @@ final class File extends ANode
 		file_put_contents($this->toString(), $content, LOCK_EX | FILE_APPEND);
 	}
 
+	/**
+	 * @param string $content
+	 */
+	public final function rewrite(string $content): void {
+		file_put_contents($this->toString(), $content, LOCK_EX);
+	}
+
 
 	/**
 	 cd ../* @return string
