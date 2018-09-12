@@ -226,6 +226,6 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	 * @return bool
 	 */
 	public final function isDot() : bool {
-		return preg_match('/^\./', Arr::last($this->Fragments)) > 0;
+		return preg_match('/^\.{1,2}$/', Arr::last($this->Fragments)) > 0;
 	}
 }
