@@ -124,6 +124,13 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * @return string
+	 */
+	public final function getEnding(): string {
+		return Arr::last($this->Fragments, $this->point);
+	}
+
+	/**
 	 * @return Directory
 	 * @throws \Exception
 	 */
