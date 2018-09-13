@@ -39,10 +39,19 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	 * @param $args, ...
 	 * @throws \Exception
 	 */
-	public final function __construct($args = null){
+	public final function __construct($args = null) {
 		if (!is_null($args) || count(func_get_args()) > 0){
 			$this->append(...func_get_args());
 		}
+	}
+
+	/**
+	 * @param $args, ...
+	 * @return Path
+	 * @throws \Exception
+	 */
+	public static function create($args = null): Path {
+		return new static(...func_get_args());
 	}
 
 	/**
