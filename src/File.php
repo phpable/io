@@ -45,6 +45,16 @@ final class File extends ANode
 	}
 
 	/**
+	 * @return void
+	 * @throws \Exception
+	 */
+	public final function remove(): void {
+		if (!@unlink($this->toString())){
+			throw new \Exception('Cannot remove file: ' .  $this->toString() .'!');
+		}
+	}
+
+	/**
 	 * @param string $content
 	 */
 	public final function append(string $content): void {
