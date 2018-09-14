@@ -38,9 +38,10 @@ final class File extends ANode
 
 	/**
 	 * @return File
+	 * @throws \Exception
 	 */
 	public final function purge(): File {
-		file_put_contents($this->toString(), '');
+		file_put_contents($this->assemble(), '');
 		return $this;
 	}
 
@@ -49,30 +50,35 @@ final class File extends ANode
 	 * @throws \Exception
 	 */
 	public final function remove(): void {
-		if (!@unlink($this->toString())){
-			throw new \Exception('Cannot remove file: ' .  $this->toString() .'!');
+		if (!@unlink($this->assemble())){
+			throw new \Exception('Cannot remove the file: ' .  $this->toString() . '!');
 		}
 	}
 
 	/**
 	 * @param string $content
+	 * @throws \Exception
 	 */
 	public final function append(string $content): void {
-		file_put_contents($this->toString(), $content, LOCK_EX | FILE_APPEND);
+		file_put_contents($this->assemble(),
+			$content, LOCK_EX | FILE_APPEND);
 	}
 
 	/**
 	 * @param string $content
+	 * @throws \Exception
 	 */
 	public final function rewrite(string $content): void {
-		file_put_contents($this->toString(), $content, LOCK_EX);
+		file_put_contents($this->assemble(),
+			$content, LOCK_EX);
 	}
 
 	/**
-	 cd ../* @return string
+	 * @return string
+	 * @throws \Exception
 	 */
 	public final function getContent(): string {
-		return file_get_contents($this->toString());
+		return file_get_contents($this->assemble());
 	}
 
 	/**
@@ -84,20 +90,23 @@ final class File extends ANode
 
 	/**
 	 * @return int
+	 * @throws \Exception
 	 */
 	public function getModifiedTime() {
-		return (int)filemtime($this->toString());
+		return (int)filemtime($this->assemble());
 	}
 
 	/**
 	 * @return int
+	 * @throws \Exception
 	 */
 	public final function getFileSize(){
-		return (int)filesize($this->toString());
+		return (int)filesize($this->assemble());
 	}
 
 	/**
 	 * @return Reader
+	 * @throws \Exception
 	 */
 	public final function toReader(): Reader {
 		return new Reader($this);
@@ -105,6 +114,7 @@ final class File extends ANode
 
 	/**
 	 * @return Writer
+	 * @throws \Exception
 	 */
 	public final function toWriter(): Writer {
 		return new Writer($this);

@@ -51,11 +51,11 @@ final class Directory extends ANode {
 	 * @throws \Exception
 	 */
 	public final function list(): \Generator {
-		$h = opendir($this->toString());
+		$h = opendir($this->assemble());
 
 		try{
 			while(($file = readdir($h)) !== false){
-				yield new Path($this->toString(), $file);
+				yield new Path($this->assemble(), $file);
 			}
 		} finally {
 			closedir($h);
@@ -88,4 +88,5 @@ final class Directory extends ANode {
 
 		return true;
 	}
+
 }
