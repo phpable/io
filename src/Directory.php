@@ -89,4 +89,34 @@ final class Directory extends ANode {
 		return true;
 	}
 
+	/**
+	 * @throws \Exception
+	 */
+	public final function clear(): void {
+		foreach ($this->list() as $Path){
+			if (!$Path->isDot()) {
+
+				if ($Path->isLink()) {
+					throw new \Exception('Cannot remove the link: ' . $Path->toString());
+				}
+
+				if ($Path->isDirectory()) {
+					$Path->toDirectory()->remove();
+				} else {
+					$Path->toFile()->remove();
+				}
+			}
+		}
+	}
+
+	/**
+	 * @throws \Exception
+	 */
+	public final function remove(): void {
+		$this->clear();
+
+		if (!@rmdir($this->assemble())){
+			throw new \Exception('Cannot remove the directory: ' . $this->toString());
+		}
+	}
 }
