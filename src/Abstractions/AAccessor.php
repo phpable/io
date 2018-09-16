@@ -34,8 +34,9 @@ abstract class AAccessor
 
 	/**
 	 * @return string
+	 * @throws \Exception
 	 */
 	public final function getLocation(): string {
-		return $this->File->toString();
+		return $this->File->getLocation();
 	}
 }
