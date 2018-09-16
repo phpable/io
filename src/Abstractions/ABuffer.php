@@ -1,10 +1,7 @@
 <?php
 namespace Able\IO\Abstractions;
 
-use \Able\IO\Abstractions\ISource;
-
-abstract class ABuffer
-	implements ISource {
+abstract class ABuffer {
 
 	/**
 	 * @var string
@@ -20,10 +17,4 @@ abstract class ABuffer
 		return $this;
 	}
 
-	/**
-	 * @return string
-	 */
-	public final function getContent(): string {
-		return $this->Buffer;
-	}
 }

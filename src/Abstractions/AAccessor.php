@@ -6,7 +6,9 @@ use \Able\Prototypes\IStringable;
 
 use \Able\IO\File;
 
-abstract class AAccessor implements IStringable {
+abstract class AAccessor
+	implements IStringable{
+
 	use TStringable;
 
 	/**

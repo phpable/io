@@ -7,6 +7,7 @@ use \Able\IO\ReadingBuffer;
 
 use \Able\IO\Abstractions\IWriter;
 use \Able\IO\Abstractions\ABuffer;
+use \Able\IO\Abstractions\ISource;
 
 use \Able\Reglib\Regexp;
 
@@ -14,7 +15,7 @@ use \Able\Reglib\Regexp;
  * @method WritingBuffer process(callable $Handler)
  */
 class WritingBuffer extends ABuffer
-	implements IWriter {
+	implements IWriter, ISource {
 
 	/**
 	 * @param \Generator $Source
@@ -36,9 +37,17 @@ class WritingBuffer extends ABuffer
 	}
 
 	/**
+	 * @return string
+	 */
+	public final function getContent(): string {
+		return $this->Buffer;
+	}
+
+	/**
 	 * @return ReadingBuffer
 	 */
-	public final function toReadingBuffer(){
+	public final function toReadingBuffer(): ReadingBuffer {
 		return new ReadingBuffer($this);
 	}
+
 }

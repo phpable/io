@@ -39,4 +39,5 @@ class ReadingBuffer extends ABuffer
 	public final function iterate(): \Generator {
 		return $this->read();
 	}
+
 }
