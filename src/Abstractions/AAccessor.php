@@ -5,9 +5,10 @@ use \Able\Prototypes\TStringable;
 use \Able\Prototypes\IStringable;
 
 use \Able\IO\File;
+use \Able\IO\Abstractions\ILocated;
 
 abstract class AAccessor
-	implements IStringable{
+	implements IStringable, ILocated {
 
 	use TStringable;
 
@@ -28,6 +29,13 @@ abstract class AAccessor
 	 * @return string
 	 */
 	public final function toString(): string {
+		return $this->File->toString();
+	}
+
+	/**
+	 * @return string
+	 */
+	public final function getLocation(): string {
 		return $this->File->toString();
 	}
 }

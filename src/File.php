@@ -3,6 +3,7 @@ namespace Able\IO;
 
 use \Able\IO\Abstractions\ANode;
 use \Able\IO\Abstractions\ISource;
+use \Able\IO\Abstractions\ILocated;
 
 use \Able\IO\Reader;
 use \Able\IO\Writer;
@@ -10,7 +11,7 @@ use \Able\IO\ReadingBuffer;
 use \Able\IO\WritingBuffer;
 
 final class File extends ANode
-	implements ISource {
+	implements ISource, ILocated {
 
 	/**
 	 * @param Path $Path
@@ -79,6 +80,14 @@ final class File extends ANode
 	 */
 	public final function getContent(): string {
 		return file_get_contents($this->assemble());
+	}
+
+	/**
+	 * @return string
+	 * @throws \Exception
+	 */
+	public final function getLocation(): string {
+		return $this->assemble();
 	}
 
 	/**
