@@ -1,8 +1,7 @@
 <?php
 namespace Able\IO;
 
-use \Able\IO\File;
-use \Able\IO\Path;
+use \Able\IO\Abstractions\ILocated;
 
 use \Able\IO\Abstractions\IReader;
 use \Able\IO\Abstractions\ISource;
