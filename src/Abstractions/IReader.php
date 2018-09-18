@@ -1,14 +1,15 @@
 <?php
 namespace Able\IO\Abstractions;
 
-use \Generator;
 use \Able\Prototypes\IIteratable;
+use \Able\IO\Abstractions\ILocated;
 
-interface IReader extends IIteratable {
+interface IReader
+	extends IIteratable, ILocated {
 
 	/**
-	 * @return Generator
+	 * @return \Generator
 	 */
-	public function read(): Generator;
+	public function read(): \Generator;
 
 }

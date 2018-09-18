@@ -17,11 +17,31 @@ class ReadingBuffer extends ABuffer
 	implements IReader {
 
 	/**
+	 * @var null
+	 */
+	private $location = 'Unknown';
+
+	/**
+	 * @return string
+	 */
+	public final function getLocation(): string {
+		return $this->location;
+	}
+
+	/**
 	 * Buffer constructor.
 	 * @param ISource $Source
 	 */
 	public final function __construct(ISource $Source) {
 		$this->Buffer = $Source->getContent();
+
+		/**
+		 * If the given source implements the 'ILocated' interface,
+		 * the source's location has to been copied to a Reader location.
+		 */
+		if ($Source instanceof ILocated){
+			$this->location = $Source->getLocation();
+		}
 	}
 
 	/**
