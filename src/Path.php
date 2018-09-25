@@ -172,19 +172,6 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
-	 * @param callable $Callback
-	 * @return \Able\IO\File
-	 * @throws \Exception
-	 */
-	public final function tryFile(callable $Callback): File {
-		if (!$this->isExists()) {
-			call_user_func($Callback, $this);
-		}
-
-		return $this->toFile();
-	}
-
-	/**
 	 * @return File
 	 * @throws \Exception
 	 */
@@ -250,4 +237,66 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	public final function isDot() : bool {
 		return preg_match('/^\.{1,2}$/', Arr::last($this->Fragments)) > 0;
 	}
+
+	/**
+	 * @const int
+	 */
+	public const TIF_FILE = 0b00000001;
+
+	/**
+	 * @const int
+	 */
+	public const TIF_NOT_FILE = 0b00000010;
+
+	/**
+	 * @const int
+	 */
+	public const TIF_DIRECTORY = 0b00000100;
+
+	/**
+	 * @const int
+	 */
+	public const TIF_NOT_DIRECTORY = 0b00001000;
+
+	/**
+	 * @const int
+	 */
+	public const TIF_LINK = 0b00010000;
+
+	/**
+	 * @const int
+	 */
+	public const TIF_NOT_LINK = 0b00100000;
+
+	/**
+	 * @const int
+	 */
+	public const TIF_EXIST = 0b01000000;
+
+	/**
+	 * @const int
+	 */
+	public const TIF_NOT_EXIST = 0b10000000;
+
+	/**
+	 * @param callable $Handler
+	 * @param int $mode
+	 * @return Path
+	 * @throws \Exception
+	 */
+	public final function try(callable $Handler, int $mode = 0): Path {
+		if ($mode & self::TIF_FILE && $this->isFile()
+			|| $mode & self::TIF_DIRECTORY && $this->isDirectory()
+			|| $mode & self::TIF_NOT_FILE && !$this->isFile()
+			|| $mode & self::TIF_NOT_DIRECTORY && !$this->isDirectory()
+			|| $mode & self::TIF_LINK && $this->isLink()
+			|| $mode & self::TIF_NOT_LINK && !$this->isLink()
+			|| $mode & self::TIF_EXIST && $this->isExists()
+			|| $mode & self::TIF_NOT_EXIST && !$this->isExists()) {
+				call_user_func($Handler, $this);
+		}
+
+		return $this;
+	}
+
 }
