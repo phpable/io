@@ -172,6 +172,19 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * @param callable $Callback
+	 * @return \Able\IO\File
+	 * @throws \Exception
+	 */
+	public final function tryFile(callable $Callback): File {
+		if (!$this->isExists()) {
+			call_user_func($Callback, $this);
+		}
+
+		return $this->toFile();
+	}
+
+	/**
 	 * @return File
 	 * @throws \Exception
 	 */
