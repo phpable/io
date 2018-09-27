@@ -14,7 +14,7 @@ class Writer extends AAccessor
 	/**
 	 * @const int
 	 */
-	public const WP_REPLACE = 0b0001;
+	public const WM_REPLACE = 0b0001;
 
 	/**
 	 * @const int
@@ -66,7 +66,7 @@ class Writer extends AAccessor
 				 * will be ignored.
 				 */
 				if (!empty(trim($line)) || ~$mode & self::WM_SKIP_EMPTY) {
-					if (~$mode & self::WP_REPLACE){
+					if (~$mode & self::WM_REPLACE){
 						fseek($handler, 0, SEEK_END);
 					}
 

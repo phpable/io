@@ -10,6 +10,7 @@ use \Able\IO\Abstractions\ABuffer;
 use \Able\IO\Abstractions\ISource;
 
 use \Able\Reglib\Regexp;
+use \Able\Helpers\Str;
 
 /**
  * @method WritingBuffer process(callable $Handler)
@@ -27,12 +28,24 @@ class WritingBuffer extends ABuffer
 	}
 
 	/**
+	 * @const int
+	 */
+	public const WM_PREPEND = 0b0001;
+
+	/**
 	 * @param \Generator $Input
+	 * @param int $mode
 	 * @return void
 	 */
-	public function write(\Generator $Input): void {
+	public final function write(\Generator $Input, int $mode = 0): void {
 		foreach ($Input as $line){
-			$this->Buffer .= rtrim($line) . "\n";
+			if (~$mode & self::WM_PREPEND) {
+				$this->Buffer = $this->Buffer
+					. Str::unbreak($line, 1) . "\n";
+			} else {
+				$this->Buffer = Str::unbreak($line)
+					. "\n" . $this->Buffer;
+			}
 		}
 	}
 
@@ -44,10 +57,17 @@ class WritingBuffer extends ABuffer
 	}
 
 	/**
+	 * @param \Able\IO\File $File
+	 * @throws \Exception
+	 */
+	public final function save(File $File): void {
+		$File->rewrite($this->Buffer);
+	}
+
+	/**
 	 * @return ReadingBuffer
 	 */
 	public final function toReadingBuffer(): ReadingBuffer {
 		return new ReadingBuffer($this);
 	}
-
 }
