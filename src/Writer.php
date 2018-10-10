@@ -70,7 +70,7 @@ class Writer extends AAccessor
 						fseek($handler, 0, SEEK_END);
 					}
 
-					fputs($handler, Str::unbreak($line, 1) . "\n");
+					fputs($handler, Str::unbreak($line, 1) . PHP_EOL);
 				}
 			}
 		}finally{
