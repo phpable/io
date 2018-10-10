@@ -38,13 +38,13 @@ class WritingBuffer extends ABuffer
 	 * @return void
 	 */
 	public final function write(\Generator $Input, int $mode = 0): void {
-		foreach ($Input as $line){
-			if (~$mode & self::WM_PREPEND) {
+		if ($mode & self::WM_PREPEND) {
+			$this->Buffer = Str::unbreak(Str::cast($Input), 1)
+				. PHP_EOL . $this->Buffer;
+		} else {
+			foreach ($Input as $line) {
 				$this->Buffer = $this->Buffer
 					. Str::unbreak($line, 1) . "\n";
-			} else {
-				$this->Buffer = Str::unbreak($line)
-					. "\n" . $this->Buffer;
 			}
 		}
 	}
