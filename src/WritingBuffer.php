@@ -44,7 +44,7 @@ class WritingBuffer extends ABuffer
 		} else {
 			foreach ($Input as $line) {
 				$this->Buffer = $this->Buffer
-					. Str::unbreak($line, 1) . "\n";
+					. Str::unbreak($line, 1) . PHP_EOL;
 			}
 		}
 	}
