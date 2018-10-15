@@ -44,6 +44,14 @@ class ReadingBuffer extends ABuffer
 	}
 
 	/**
+	 * @param ISource $Source
+	 * @return ReadingBuffer
+	 */
+	public final static function create(ISource $Source){
+		return new static($Source);
+	}
+
+	/**
 	 * @return \Generator
 	 * @throws \Exception
 	 */
