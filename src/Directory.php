@@ -119,4 +119,34 @@ final class Directory extends ANode {
 			throw new \Exception('Cannot remove the directory: ' . $this->toString());
 		}
 	}
+
+	/**
+	 * @param Path $Destination
+	 * @throws \Exception
+	 */
+	public final function copy(Path $Destination): void {
+		$this->clone($Destination->append($this->getBaseName())->try(function(){
+			throw new \Exception('Destination is not a directory!');
+		}, Path::TIF_FILE | Path::TIF_LINK)->forceDirectory());
+	}
+
+	/**
+	 * @param Directory $Destination
+	 * @throws \Exception
+	 */
+	public final function clone(Directory $Destination){
+		if (!$Destination->isEmpty()){
+			throw new \Exception('Destination is not empty!');
+		}
+
+		foreach ($this->list() as $Path) {
+			if (!$Path->isDot()){
+				if ($Path->isDirectory()){
+					$Path->toDirectory()->copy($Destination->toPath());
+				} else{
+					copy($Path, $Destination->toPath()->append($Path->getEnding()));
+				}
+			}
+		}
+	}
 }
