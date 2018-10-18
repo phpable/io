@@ -90,6 +90,7 @@ final class Directory extends ANode {
 	}
 
 	/**
+	 * @return void
 	 * @throws \Exception
 	 */
 	public final function clear(): void {
@@ -110,6 +111,7 @@ final class Directory extends ANode {
 	}
 
 	/**
+	 * @return void
 	 * @throws \Exception
 	 */
 	public final function remove(): void {
@@ -122,6 +124,7 @@ final class Directory extends ANode {
 
 	/**
 	 * @param Path $Destination
+	 * @return void
 	 * @throws \Exception
 	 */
 	public final function copy(Path $Destination): void {
@@ -132,9 +135,10 @@ final class Directory extends ANode {
 
 	/**
 	 * @param Directory $Destination
+	 * @return void
 	 * @throws \Exception
 	 */
-	public final function clone(Directory $Destination){
+	public final function clone(Directory $Destination): void {
 		if (!$Destination->isEmpty()){
 			throw new \Exception('Destination is not empty!');
 		}
