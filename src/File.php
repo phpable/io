@@ -114,6 +114,14 @@ final class File extends ANode
 	}
 
 	/**
+	 * @return string
+	 * @throws \Exception
+	 */
+	public final function getMimeType(): string {
+		return mime_content_type($this->assemble());
+	}
+
+	/**
 	 * @return Reader
 	 * @throws \Exception
 	 */
