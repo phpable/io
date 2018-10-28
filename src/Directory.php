@@ -76,6 +76,18 @@ final class Directory extends ANode {
 	}
 
 	/**
+	 * @param string $mask
+	 * @return \Generator
+	 * @throws \Exception
+	 */
+	public final function glob(string $mask): \Generator {
+		foreach (glob($this->toString() . '/' . ltrim($mask, '/'),
+			GLOB_NOSORT | GLOB_BRACE) as $path){
+				yield Path::create($path);
+		}
+	}
+
+	/**
 	 * @return bool
 	 * @throws \Exception
 	 */
