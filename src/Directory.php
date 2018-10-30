@@ -2,9 +2,13 @@
 namespace Able\IO;
 
 use \Able\Helpers\Fs;
+
+use \Able\Prototypes\ICountable;
+
 use \Able\IO\Abstractions\ANode;
 
-final class Directory extends ANode {
+final class Directory extends ANode
+	implements ICountable {
 
 	/**
 	 * @const int
@@ -99,6 +103,15 @@ final class Directory extends ANode {
 		}
 
 		return true;
+	}
+
+	/**
+	 * @return int
+	 * @throws \Exception
+	 */
+	public final function count(): int {
+		return count(array_filter(scandir($this->assemble()), function(){
+			return !preg_match('/^\.+$/', func_get_arg(0)); }), SCANDIR_SORT_NONE);
 	}
 
 	/**
