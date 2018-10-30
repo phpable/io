@@ -241,22 +241,22 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	/**
 	 * @const int
 	 */
-	public const TIF_FILE = 0b00000001;
+	public const TIF_FILE = 0b0001;
 
 	/**
 	 * @const int
 	 */
-	public const TIF_NOT_FILE = 0b00000010;
+	public const TIF_NOT_FILE = 0b0010;
 
 	/**
 	 * @const int
 	 */
-	public const TIF_DIRECTORY = 0b00000100;
+	public const TIF_DIRECTORY = 0b0100;
 
 	/**
 	 * @const int
 	 */
-	public const TIF_NOT_DIRECTORY = 0b00001000;
+	public const TIF_NOT_DIRECTORY = 0b1000;
 
 	/**
 	 * @const int
@@ -279,6 +279,36 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	public const TIF_NOT_EXIST = 0b10000000;
 
 	/**
+	 * @const int
+	 */
+	public const TIF_READABLE = 0b000010000000;
+
+	/**
+	 * @const int
+	 */
+	public const TIF_NOT_READABLE = 0b001000000000;
+
+	/**
+	 * @const int
+	 */
+	public const TIF_WRITABLE = 0b010000000000;
+
+	/**
+	 * @const int
+	 */
+	public const TIF_NOT_WRITABLE = 0b100000000000;
+
+	/**
+	 * @const int
+	 */
+	public const TIF_ABSOLUTE = 0b0001000000000000;
+
+	/**
+	 * @const int
+	 */
+	public const TIF_NOT_ABSOLUTE = 0b0010000000000000;
+
+	/**
 	 * @param callable $Handler
 	 * @param int $mode
 	 * @return Path
@@ -292,7 +322,13 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 			|| $mode & self::TIF_LINK && $this->isLink()
 			|| $mode & self::TIF_NOT_LINK && !$this->isLink()
 			|| $mode & self::TIF_EXIST && $this->isExists()
-			|| $mode & self::TIF_NOT_EXIST && !$this->isExists()) {
+			|| $mode & self::TIF_NOT_EXIST && !$this->isExists()
+			|| $mode & self::TIF_READABLE && $this->isReadable()
+			|| $mode & self::TIF_NOT_READABLE && !$this->isReadable()
+			|| $mode & self::TIF_WRITABLE && $this->isWritable()
+			|| $mode & self::TIF_NOT_WRITABLE && !$this->isWritable()
+			|| $mode & self::TIF_ABSOLUTE && $this->isAbsolute()
+			|| $mode & self::TIF_NOT_ABSOLUTE && !$this->isAbsolute()) {
 				call_user_func($Handler, $this);
 		}
 
