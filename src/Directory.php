@@ -6,6 +6,7 @@ use \Able\Helpers\Fs;
 use \Able\Prototypes\ICountable;
 
 use \Able\IO\Abstractions\ANode;
+use \Able\IO\Abstractions\IPatchable;
 
 final class Directory extends ANode
 	implements ICountable {
@@ -148,12 +149,12 @@ final class Directory extends ANode
 	}
 
 	/**
-	 * @param Path $Destination
+	 * @param IPatchable $Destination
 	 * @return void
 	 * @throws \Exception
 	 */
-	public final function copy(Path $Destination): void {
-		$this->clone($Destination->append($this->getBaseName())->try(function(){
+	public final function copy(IPatchable $Destination): void {
+		$this->clone($Destination->toPath()->append($this->getBaseName())->try(function(){
 			throw new \Exception('Destination is not a directory!');
 		}, Path::TIF_FILE | Path::TIF_LINK)->forceDirectory());
 	}

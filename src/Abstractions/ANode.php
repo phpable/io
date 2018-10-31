@@ -5,7 +5,7 @@ use \Able\Prototypes\IStringable;
 use \Able\Prototypes\TStringable;
 
 use \Able\IO\Path;
-use PHPUnit\Runner\Exception;
+use \Able\IO\Abstractions\IPatchable;
 
 abstract class ANode implements IStringable {
 	use TStringable;
@@ -29,7 +29,7 @@ abstract class ANode implements IStringable {
 
 	/**
 	 * @return string
-	 * @throws /Exception
+	 * @throws \Exception
 	 */
 	public final function toString(): string {
 		return (string)$this->assemble();
@@ -56,10 +56,15 @@ abstract class ANode implements IStringable {
 
 	/**
 	 * @return string
-	 * @throws /Exception
+	 * @throws \Exception
 	 */
 	public final function getBaseName(): string {
 		return basename($this->assemble());
 	}
+
+	/**
+	 * @param IPatchable $Destination
+	 */
+	abstract function copy(IPatchable $Destination): void;
 
 }

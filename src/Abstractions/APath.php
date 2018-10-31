@@ -8,11 +8,12 @@ use \Able\Prototypes\ICallable;
 use \Able\Prototypes\TCallable;
 
 use \Able\IO\Abstractions\IBehavior;
+use \Able\IO\Abstractions\IPatchable;
 
 use \Able\IO\Behavior\BUnix;
 use \Able\IO\Behavior\BWindows;
 
-abstract class APath implements ICallable, IBehavior {
+abstract class APath implements ICallable, IBehavior, IPatchable {
 	use TCallable;
 
 	/**

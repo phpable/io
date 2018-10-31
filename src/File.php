@@ -4,6 +4,7 @@ namespace Able\IO;
 use \Able\IO\Abstractions\ANode;
 use \Able\IO\Abstractions\ISource;
 use \Able\IO\Abstractions\ILocated;
+use \Able\IO\Abstractions\IPatchable;
 
 use \Able\IO\Reader;
 use \Able\IO\Writer;
@@ -150,5 +151,18 @@ final class File extends ANode
 	 */
 	public final function toWritingBuffer(): WritingBuffer {
 		return WritingBuffer::create($this->toReader()->read());
+	}
+
+	/**
+	 * @param IPatchable $Destination
+	 * @return void
+	 * @throws \Exception
+	 */
+	public final function copy(IPatchable $Destination): void {
+		copy($this->assemble(), $Destination->toPath()->try(function(){
+			throw new \Exception('Destination is not exists of not writable!');
+		}, Path::TIF_NOT_WRITABLE)->append($this->getBaseName())->try(function(){
+			throw new \Exception('Destination is not a file!');
+		}, Path::TIF_DIRECTORY | Path::TIF_LINK));
 	}
 }
