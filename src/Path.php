@@ -13,6 +13,8 @@ use \Able\IO\Abstractions\APath;
 
 use \Able\IO\File;
 use \Able\IO\Directory;
+use \Able\IO\Abstractions\ANode;
+
 use PHPUnit\Runner\Exception;
 
 class Path extends APath implements IStringable, IArrayable, ICountable {
@@ -102,28 +104,6 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
-	 * @return string
-	 */
-	public final function toString() : string {
-		return (!is_null($this->point) ? (rtrim($this->point, self::DS)
-			. self::DS) : '') . Str::join(self::DS, $this->Fragments);
-	}
-
-	/**
-	 * @return array
-	 */
-	public final function toArray() : array {
-		return $this->Fragments;
-	}
-
-	/**
-	 * @return Path
-	 */
-	public final function toPath() : Path {
-		return clone $this;
-	}
-
-	/**
 	 * @return Path
 	 * @throws \Exception
 	 */
@@ -177,6 +157,40 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	 */
 	public final function forceFile(): File {
 		return new File($this);
+	}
+
+	/**
+	 * @return ANode
+	 * @throws \Exception
+	 */
+	public final function toNode(): ANode {
+		if ($this->isDirectory()){
+			return $this->toDirectory();
+		}
+
+		return $this->toFile();
+	}
+
+	/**
+	 * @return string
+	 */
+	public final function toString() : string {
+		return (!is_null($this->point) ? (rtrim($this->point, self::DS)
+			. self::DS) : '') . Str::join(self::DS, $this->Fragments);
+	}
+
+	/**
+	 * @return array
+	 */
+	public final function toArray() : array {
+		return $this->Fragments;
+	}
+
+	/**
+	 * @return Path
+	 */
+	public final function toPath() : Path {
+		return clone $this;
 	}
 
 	/**
