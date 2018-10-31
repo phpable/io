@@ -66,9 +66,10 @@ abstract class ANode
 
 	/**
 	 * @param IPatchable $Destination
+	 * @param bool $rewrite
 	 * @return void
 	 */
-	abstract public function copy(IPatchable $Destination): void;
+	abstract public function copy(IPatchable $Destination, bool $rewrite = false): void;
 
 	/**
 	 * @return  void

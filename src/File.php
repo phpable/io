@@ -105,6 +105,7 @@ final class File extends ANode
 
 	/**
 	 * @return string
+	 * @throws \Exception
 	 */
 	public final function getExtension(): string {
 		return preg_replace('/^.*\./', '', basename($this->getBaseName()));
@@ -167,14 +168,15 @@ final class File extends ANode
 
 	/**
 	 * @param IPatchable $Destination
+	 * @param bool $rewrite
 	 * @return void
 	 * @throws \Exception
 	 */
-	public final function copy(IPatchable $Destination): void {
+	public final function copy(IPatchable $Destination, bool $rewrite = false): void {
 		copy($this->assemble(), $Destination->toPath()->try(function(){
-			throw new \Exception('Destination is not exists of not writable!');
-		}, Path::TIF_NOT_WRITABLE)->append($this->getBaseName())->try(function(){
-			throw new \Exception('Destination is not a file!');
-		}, Path::TIF_DIRECTORY | Path::TIF_LINK));
+			throw new \Exception('Destination is not exists or not writable!');
+		}, Path::TIF_NOT_WRITABLE)->append($this->getBaseName())->try(function() use ($rewrite) {
+			if (!$rewrite) { throw new \Exception('Destination is already exist!');
+		}}, Path::TIF_EXIST));
 	}
 }

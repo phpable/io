@@ -160,12 +160,19 @@ final class Directory extends ANode
 
 	/**
 	 * @param IPatchable $Destination
+	 * @param bool $rewrite
 	 * @return void
 	 * @throws \Exception
 	 */
-	public final function copy(IPatchable $Destination): void {
-		$this->clone($Destination->toPath()->append($this->getBaseName())->try(function(){
-			throw new \Exception('Destination is already exists!');
+	public final function copy(IPatchable $Destination, bool $rewrite = false): void {
+		$this->clone($Destination->toPath()->try(function(){
+			throw new \Exception('Destination is not exists or not writable!');
+		}, Path::TIF_NOT_WRITABLE)->append($this->getBaseName())->try(function(Path $Path) use ($rewrite) {
+			if (!$rewrite){
+				throw new \Exception('Destination is already exists!');
+			} else {
+				$Path->toDirectory()->clear();
+			}
 		}, Path::TIF_EXIST)->forceDirectory());
 	}
 
