@@ -149,17 +149,6 @@ final class Directory extends ANode
 	}
 
 	/**
-	 * @param IPatchable $Destination
-	 * @return void
-	 * @throws \Exception
-	 */
-	public final function copy(IPatchable $Destination): void {
-		$this->clone($Destination->toPath()->append($this->getBaseName())->try(function(){
-			throw new \Exception('Destination is not a directory!');
-		}, Path::TIF_FILE | Path::TIF_LINK)->forceDirectory());
-	}
-
-	/**
 	 * @param string $name
 	 * @throws \Exception
 	 */
@@ -167,6 +156,17 @@ final class Directory extends ANode
 		rename($this->assemble(), $this->toPath()->changeEnding($name)->try(function(){
 			throw new \Exception('Destination already exists!');
 		}, Path::TIF_EXIST)->toString());
+	}
+
+	/**
+	 * @param IPatchable $Destination
+	 * @return void
+	 * @throws \Exception
+	 */
+	public final function copy(IPatchable $Destination): void {
+		$this->clone($Destination->toPath()->append($this->getBaseName())->try(function(){
+			throw new \Exception('Destination is already exists!');
+		}, Path::TIF_EXIST)->forceDirectory());
 	}
 
 	/**
