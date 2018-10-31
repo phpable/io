@@ -7,7 +7,9 @@ use \Able\Prototypes\TStringable;
 use \Able\IO\Path;
 use \Able\IO\Abstractions\IPatchable;
 
-abstract class ANode implements IStringable {
+abstract class ANode
+	implements IStringable, IPatchable {
+
 	use TStringable;
 
 	/**
