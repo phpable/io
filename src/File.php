@@ -10,6 +10,7 @@ use \Able\IO\Reader;
 use \Able\IO\Writer;
 use \Able\IO\ReadingBuffer;
 use \Able\IO\WritingBuffer;
+use function foo\func;
 
 final class File extends ANode
 	implements ISource, ILocated {
@@ -55,6 +56,17 @@ final class File extends ANode
 		if (!@unlink($this->assemble())){
 			throw new \Exception('Cannot remove the file: ' .  $this->toString() . '!');
 		}
+	}
+
+	/**
+	 * @param string $name
+	 * @return void
+	 * @throws \Exception
+	 */
+	public final function rename(string $name): void {
+		rename($this->assemble(), $this->toPath()->changeEnding($name)->try(function(){
+			throw new \Exception('Destination already exists!');
+		}, Path::TIF_EXIST)->toString());
 	}
 
 	/**

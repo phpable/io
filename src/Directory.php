@@ -160,6 +160,16 @@ final class Directory extends ANode
 	}
 
 	/**
+	 * @param string $name
+	 * @throws \Exception
+	 */
+	public final function rename(string $name): void {
+		rename($this->assemble(), $this->toPath()->changeEnding($name)->try(function(){
+			throw new \Exception('Destination already exists!');
+		}, Path::TIF_EXIST)->toString());
+	}
+
+	/**
 	 * @param Directory $Destination
 	 * @return void
 	 * @throws \Exception

@@ -120,6 +120,17 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * @param string $ending
+	 * @return Path
+	 */
+	public final function changeEnding(string $ending): Path {
+		array_pop($this->Fragments);
+		array_push($this->Fragments, $ending);
+
+		return $this;
+	}
+
+	/**
 	 * @return Directory
 	 * @throws \Exception
 	 */

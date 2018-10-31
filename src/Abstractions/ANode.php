@@ -64,7 +64,18 @@ abstract class ANode implements IStringable {
 
 	/**
 	 * @param IPatchable $Destination
+	 * @return void
 	 */
-	abstract function copy(IPatchable $Destination): void;
+	abstract public function copy(IPatchable $Destination): void;
 
+	/**
+	 * @return  void
+	 */
+	abstract public function remove(): void;
+
+	/**
+	 * @param string $name
+	 * @return void
+	 */
+	abstract public function rename(string $name): void;
 }
