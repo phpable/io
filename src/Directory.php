@@ -32,11 +32,15 @@ final class Directory extends ANode
 		}
 
 		if ($Path->isFile()) {
-			throw new \Exception('Path "' . $Path->toString() . '" is a file!');
+			throw new \Exception(sprintf('Path "%s" is a file!', $Path->toString()));
 		}
 
 		if ($Path->isLink()) {
-			throw new \Exception('Path "' . $Path->toString() . '" is a link!');
+			throw new \Exception(sprintf('Path "%s" is a link!', $Path->toString()));
+		}
+
+		if ($Path->isDot()){
+			throw new \Exception(sprintf('Path "%s" is not a directory!', $Path->toString()));
 		}
 
 		if (!$Path->isExists()) {
@@ -167,7 +171,7 @@ final class Directory extends ANode
 	public final function copy(IPatchable $Destination, bool $rewrite = false): void {
 		$this->clone($Destination->toPath()->try(function(){
 			throw new \Exception('Destination is not exists or not writable!');
-		}, Path::TIF_NOT_WRITABLE)->append($this->getBaseName())->try(function(Path $Path) use ($rewrite) {
+		}, Path::TIF_NOT_WRITABLE | Path::TIF_DOT)->append($this->getBaseName())->try(function(Path $Path) use ($rewrite) {
 			if (!$rewrite){
 				throw new \Exception('Destination is already exists!');
 			} else {

@@ -334,6 +334,11 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	public const TIF_NOT_ABSOLUTE = 0b0010000000000000;
 
 	/**
+	 * @const int
+	 */
+	public const TIF_DOT = 0b0100000000000000;
+
+	/**
 	 * @param callable $Handler
 	 * @param int $mode
 	 * @return Path
@@ -353,7 +358,8 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 			|| $mode & self::TIF_WRITABLE && $this->isWritable()
 			|| $mode & self::TIF_NOT_WRITABLE && !$this->isWritable()
 			|| $mode & self::TIF_ABSOLUTE && $this->isAbsolute()
-			|| $mode & self::TIF_NOT_ABSOLUTE && !$this->isAbsolute()) {
+			|| $mode & self::TIF_NOT_ABSOLUTE && !$this->isAbsolute()
+			|| $mode & self::TIF_DOT && $this->isDot()) {
 				call_user_func($Handler, $this);
 		}
 
