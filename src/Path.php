@@ -268,9 +268,9 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	 * @return bool
 	 */
 	public final function isChildOf(Path $Path): bool {
-		return preg_match('/^' . preg_quote($this->toString(), '/') . '/', $Path->toString());
+		return preg_match('/^' . preg_quote($Path, '/') . '/', $this->toString()) > 0;
 	}
-
+	
 	/**
 	 * @param Path $Path
 	 * @return bool
