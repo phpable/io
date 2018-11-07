@@ -298,6 +298,14 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * @param Path $Path
+	 * @return bool
+	 */
+	public final function isEqualTo(Path $Path){
+		return strlen(trim($this->exclude($Path), DIRECTORY_SEPARATOR)) < 1;
+	}
+
+	/**
 	 * @const int
 	 */
 	public const TIF_FILE = 0b0001;
