@@ -264,6 +264,22 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * @param Path $Path
+	 * @return bool
+	 */
+	public final function isChildOf(Path $Path): bool {
+		return preg_match('/^' . preg_quote($this->toString(), '/') . '/', $Path->toString());
+	}
+
+	/**
+	 * @param Path $Path
+	 * @return bool
+	 */
+	public final function isParentOf(Path $Path){
+		return $Path->isChildOf($this);
+	}
+
+	/**
 	 * @const int
 	 */
 	public const TIF_FILE = 0b0001;
