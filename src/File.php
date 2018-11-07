@@ -119,7 +119,7 @@ final class File extends ANode
 	 * @return int
 	 * @throws \Exception
 	 */
-	public final function getSize(){
+	public final function getSize(): int {
 		return (int)filesize($this->assemble());
 	}
 
