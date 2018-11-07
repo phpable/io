@@ -104,6 +104,24 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * @param Path $Path
+	 * @return Path
+	 */
+	public final function exclude(Path $Path): Path {
+		if ($this->isChildOf($Path)) {
+			foreach ($Path->toArray() as $fragment){
+				if (count($this->Fragments) < 1 || $this->Fragments[0] !== $fragment){
+					break;
+				}
+
+				array_shift($this->Fragments);
+			}
+		}
+
+		return $this;
+	}
+
+	/**
 	 * @return Path
 	 * @throws \Exception
 	 */
@@ -270,7 +288,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	public final function isChildOf(Path $Path): bool {
 		return preg_match('/^' . preg_quote($Path, '/') . '/', $this->toString()) > 0;
 	}
-	
+
 	/**
 	 * @param Path $Path
 	 * @return bool
