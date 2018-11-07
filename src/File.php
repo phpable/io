@@ -20,17 +20,13 @@ final class File extends ANode
 	 * @throws \Exception
 	 */
 	public final function __construct(Path $Path) {
-		if ($Path->isDirectory()) {
-			throw new \Exception('Path "' . $Path->toString() . '" is a directory!');
-		}
-
-		if ($Path->isLink()) {
-			throw new \Exception('Path "' . $Path->toString() . '" is a link!');
+		if ($Path->isDirectory() || $Path->isLink()) {
+			throw new \Exception(sprintf('Path is not a regular file: %s!', $Path->toString()));
 		}
 
 		if (!$Path->isExists()) {
 			if (!$Path->getParent()->isWritable()){
-				throw new \Exception('Path "' . $Path->toString() . '" is not exists or not writable!');
+				throw new \Exception(sprintf('Path is not exists or not writable: %s!', $Path->toString()));
 			}
 
 			file_put_contents($Path->toString(), '');
