@@ -120,6 +120,14 @@ final class Directory extends ANode
 	}
 
 	/**
+	 * @return int
+	 * @throws \Exception
+	 */
+	public final function getSize(): int {
+		return $this->count();
+	}
+
+	/**
 	 * @return void
 	 * @throws \Exception
 	 */

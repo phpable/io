@@ -72,6 +72,11 @@ abstract class ANode
 	abstract public function copy(IPatchable $Destination, bool $rewrite = false): void;
 
 	/**
+	 * @return int
+	 */
+	abstract public function getSize(): int;
+
+	/**
 	 * @return  void
 	 */
 	abstract public function remove(): void;
