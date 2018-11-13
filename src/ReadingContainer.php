@@ -6,6 +6,9 @@ use \Able\IO\Abstractions\ABuffer;
 
 use \Able\Prototypes\ICountable;
 
+use \Exception;
+use \Generator;
+
 class ReadingContainer
 	implements IReader, ICountable {
 
@@ -35,9 +38,9 @@ class ReadingContainer
 	private $active = -1;
 
 	/**
-	 * @return \Generator
+	 * @return Generator
 	 */
-	public function read(): \Generator {
+	public function read(): Generator {
 		foreach ($this->Collection as $this->active => $Reader){
 			yield from $Reader->read();
 		}
@@ -68,10 +71,10 @@ class ReadingContainer
 	}
 
 	/**
-	 * @return \Generator
-	 * @throws \Exception
+	 * @return Generator
+	 * @throws Exception
 	 */
-	public final function iterate(): \Generator {
+	public final function iterate(): Generator {
 		return $this->read();
 	}
 }

@@ -9,6 +9,9 @@ use \Able\IO\Abstractions\ABuffer;
 
 use \Able\Reglib\Regex;
 
+use \Exception;
+use \Generator;
+
 /**
  * @method ReadingBuffer process(callable $Handler)
  */
@@ -64,10 +67,10 @@ class ReadingBuffer extends ABuffer
 	}
 
 	/**
-	 * @return \Generator
-	 * @throws \Exception
+	 * @return Generator
+	 * @throws Exception
 	 */
-	public function read(): \Generator {
+	public function read(): Generator {
 		$this->index = 0;
 
 		foreach (Regex::create('/(?:\r\n|\n|\r)/')->split($this->Buffer) as $line){
@@ -76,10 +79,10 @@ class ReadingBuffer extends ABuffer
 	}
 
 	/**
-	 * @return \Generator
-	 * @throws \Exception
+	 * @return Generator
+	 * @throws Exception
 	 */
-	public final function iterate(): \Generator {
+	public final function iterate(): Generator {
 		return $this->read();
 	}
 

@@ -14,6 +14,7 @@ use \Able\IO\Abstractions\APath;
 use \Able\IO\File;
 use \Able\IO\Directory;
 use \Able\IO\Abstractions\ANode;
+use \Exception;
 
 class Path extends APath implements IStringable, IArrayable, ICountable {
 	use TStringable;
@@ -37,7 +38,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 
 	/**
 	 * @param $args, ...
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function __construct($args = null) {
 		if (!is_null($args) || count(func_get_args()) > 0){
@@ -48,7 +49,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	/**
 	 * @param $args, ...
 	 * @return Path
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function create($args = null): Path {
 		return new static(...func_get_args());
@@ -69,7 +70,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	/**
 	 * @param mixed $fragment, ...
 	 * @return Path
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function append($fragment) : Path {
 		foreach(array_filter(Arr::simplify(func_get_args())) as $fragment){
@@ -88,7 +89,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	/**
 	 * @param mixed $fragment, ...
 	 * @return Path
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function prepend($fragment) : Path {
 		foreach(Arr::simplify(func_get_args()) as $fragment){
@@ -121,7 +122,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 
 	/**
 	 * @return Path
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function getParent() : Path {
 		return new Path(Arr::unshift(array_slice($this->Fragments,
@@ -148,11 +149,11 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 
 	/**
 	 * @return Directory
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function toDirectory() : Directory {
 		if (!$this->isExists()){
-			throw new \Exception(sprintf('Path "%s" does not exists!', $this->toString()));
+			throw new Exception(sprintf('Path "%s" does not exists!', $this->toString()));
 		}
 
 		return new Directory($this);
@@ -160,7 +161,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 
 	/**
 	 * @return Directory
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function forceDirectory(): Directory {
 		return new Directory($this);
@@ -168,11 +169,11 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 
 	/**
 	 * @return File
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function toFile(): File {
 		if (!$this->isExists()){
-			throw new \Exception(sprintf('Path "%s" does not exists!', $this->toString()));
+			throw new Exception(sprintf('Path "%s" does not exists!', $this->toString()));
 		}
 
 		return new File($this);
@@ -180,7 +181,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 
 	/**
 	 * @return File
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function forceFile(): File {
 		return new File($this);
@@ -188,7 +189,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 
 	/**
 	 * @return ANode
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function toNode(): ANode {
 		if ($this->isDirectory()){
@@ -399,7 +400,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	 * @param callable $Handler
 	 * @param int $mode
 	 * @return Path
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function try(callable $Handler, int $mode = 0): Path {
 		if ($mode & self::TIF_FILE && $this->isFile()

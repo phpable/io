@@ -8,6 +8,9 @@ use \Able\IO\Abstractions\AAccessor;
 
 use \Able\Helpers\Str;
 
+use \Exception;
+use \Generator;
+
 class Reader extends AAccessor
 	implements IReader {
 
@@ -24,12 +27,12 @@ class Reader extends AAccessor
 	}
 
 	/**
-	 * @return \Generator
-	 * @throws \Exception
+	 * @return Generator
+	 * @throws Exception
 	 */
-	public function read(): \Generator {
+	public function read(): Generator {
 		if (!is_resource($handler = fopen($this->File->toString(), 'r'))){
-			throw new \Exception('Invalid source!');
+			throw new Exception('Invalid source!');
 		}
 
 		$this->index = 0;
@@ -43,10 +46,10 @@ class Reader extends AAccessor
 	}
 
 	/**
-	 * @return \Generator
-	 * @throws \Exception
+	 * @return Generator
+	 * @throws Exception
 	 */
-	public final function iterate(): \Generator {
+	public final function iterate(): Generator {
 		return $this->read();
 	}
 }

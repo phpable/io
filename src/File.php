@@ -10,23 +10,23 @@ use \Able\IO\Reader;
 use \Able\IO\Writer;
 use \Able\IO\ReadingBuffer;
 use \Able\IO\WritingBuffer;
-use function foo\func;
+use \Exception;
 
 final class File extends ANode
 	implements ISource, ILocated {
 
 	/**
 	 * @param Path $Path
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function __construct(Path $Path) {
 		if ($Path->isDirectory() || $Path->isLink()) {
-			throw new \Exception(sprintf('Path is not a regular file: %s!', $Path->toString()));
+			throw new Exception(sprintf('Path is not a regular file: %s!', $Path->toString()));
 		}
 
 		if (!$Path->isExists()) {
 			if (!$Path->getParent()->isWritable()){
-				throw new \Exception(sprintf('Path is not exists or not writable: %s!', $Path->toString()));
+				throw new Exception(sprintf('Path is not exists or not writable: %s!', $Path->toString()));
 			}
 
 			file_put_contents($Path->toString(), '');
@@ -37,7 +37,7 @@ final class File extends ANode
 
 	/**
 	 * @return File
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function purge(): File {
 		file_put_contents($this->assemble(), '');
@@ -46,28 +46,28 @@ final class File extends ANode
 
 	/**
 	 * @return void
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function remove(): void {
 		if (!@unlink($this->assemble())){
-			throw new \Exception('Cannot remove the file: ' .  $this->toString() . '!');
+			throw new Exception('Cannot remove the file: ' .  $this->toString() . '!');
 		}
 	}
 
 	/**
 	 * @param string $name
 	 * @return void
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function rename(string $name): void {
 		rename($this->assemble(), $this->toPath()->changeEnding($name)->try(function(){
-			throw new \Exception('Destination already exists!');
+			throw new Exception('Destination already exists!');
 		}, Path::TIF_EXIST)->toString());
 	}
 
 	/**
 	 * @param string $content
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function append(string $content): void {
 		file_put_contents($this->assemble(),
@@ -76,7 +76,7 @@ final class File extends ANode
 
 	/**
 	 * @param string $content
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function rewrite(string $content): void {
 		file_put_contents($this->assemble(),
@@ -85,7 +85,7 @@ final class File extends ANode
 
 	/**
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function getContent(): string {
 		return file_get_contents($this->assemble());
@@ -93,7 +93,7 @@ final class File extends ANode
 
 	/**
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function getLocation(): string {
 		return $this->assemble();
@@ -101,7 +101,7 @@ final class File extends ANode
 
 	/**
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function getExtension(): string {
 		return preg_replace('/^.*\./', '', basename($this->getBaseName()));
@@ -109,7 +109,7 @@ final class File extends ANode
 
 	/**
 	 * @return int
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getModifiedTime() {
 		return (int)filemtime($this->assemble());
@@ -117,7 +117,7 @@ final class File extends ANode
 
 	/**
 	 * @return int
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function getSize(): int {
 		return (int)filesize($this->assemble());
@@ -125,7 +125,7 @@ final class File extends ANode
 
 	/**
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function getMimeType(): string {
 		return mime_content_type($this->assemble());
@@ -133,7 +133,7 @@ final class File extends ANode
 
 	/**
 	 * @return Reader
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function toReader(): Reader {
 		return new Reader($this);
@@ -141,7 +141,7 @@ final class File extends ANode
 
 	/**
 	 * @return Writer
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function toWriter(): Writer {
 		return new Writer($this);
@@ -156,7 +156,7 @@ final class File extends ANode
 
 	/**
 	 * @return WritingBuffer
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function toWritingBuffer(): WritingBuffer {
 		return WritingBuffer::create($this->toReader()->read());
@@ -166,13 +166,13 @@ final class File extends ANode
 	 * @param IPatchable $Destination
 	 * @param bool $rewrite
 	 * @return void
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function copy(IPatchable $Destination, bool $rewrite = false): void {
 		copy($this->assemble(), $Destination->toPath()->try(function(){
-			throw new \Exception('Destination is not exists or not writable!');
+			throw new Exception('Destination is not exists or not writable!');
 		}, Path::TIF_NOT_WRITABLE)->append($this->getBaseName())->try(function() use ($rewrite) {
-			if (!$rewrite) { throw new \Exception('Destination is already exist!');
+			if (!$rewrite) { throw new Exception('Destination is already exist!');
 		}}, Path::TIF_EXIST));
 	}
 }

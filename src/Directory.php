@@ -9,6 +9,9 @@ use \Able\Prototypes\ICountable;
 use \Able\IO\Abstractions\ANode;
 use \Able\IO\Abstractions\IPatchable;
 
+use \Exception;
+use \Generator;
+
 final class Directory extends ANode
 	implements ICountable {
 
@@ -25,28 +28,28 @@ final class Directory extends ANode
 	/**
 	 * @param Path $Path
 	 * @param int $mode
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function __construct(Path $Path, int $mode = self::AM_INHERIT) {
 		if (!in_array($mode, [self::AM_INHERIT, self::AM_PUBLIC])){
-			throw new \Exception('Undefined mode!');
+			throw new Exception('Undefined mode!');
 		}
 
 		if ($Path->isFile()) {
-			throw new \Exception(sprintf('Path "%s" is a file!', $Path->toString()));
+			throw new Exception(sprintf('Path "%s" is a file!', $Path->toString()));
 		}
 
 		if ($Path->isLink()) {
-			throw new \Exception(sprintf('Path "%s" is a link!', $Path->toString()));
+			throw new Exception(sprintf('Path "%s" is a link!', $Path->toString()));
 		}
 
 		if ($Path->isDot()){
-			throw new \Exception(sprintf('Path "%s" is not a directory or not accessible!', $Path->toString()));
+			throw new Exception(sprintf('Path "%s" is not a directory or not accessible!', $Path->toString()));
 		}
 
 		if (!$Path->isExists()) {
 			if (!is_writable($root = Fs::ppath($Path->toString()))){
-				throw new \Exception(sprintf('Path "%s" does not exists or not writable!', $Path->toString()));
+				throw new Exception(sprintf('Path "%s" does not exists or not writable!', $Path->toString()));
 			}
 
 			mkdir($Path->toString(), $mode == self::AM_INHERIT
@@ -57,10 +60,10 @@ final class Directory extends ANode
 	}
 
 	/**
-	 * @return \Generator
-	 * @throws \Exception
+	 * @return Generator
+	 * @throws Exception
 	 */
-	public final function list(): \Generator {
+	public final function list(): Generator {
 		$h = opendir($this->assemble());
 
 		try{
@@ -74,10 +77,10 @@ final class Directory extends ANode
 
 	/**
 	 * @param string $mask
-	 * @return \Generator
-	 * @throws \Exception
+	 * @return Generator
+	 * @throws Exception
 	 */
-	public final function filter(string $mask): \Generator {
+	public final function filter(string $mask): Generator {
 		$mask = Str::mleft($mask, $this->toString());
 
 		foreach ($this->list() as $Path){
@@ -89,10 +92,10 @@ final class Directory extends ANode
 
 	/**
 	 * @param string $mask
-	 * @return \Generator
-	 * @throws \Exception
+	 * @return Generator
+	 * @throws Exception
 	 */
-	public final function glob(string $mask): \Generator {
+	public final function glob(string $mask): Generator {
 		foreach (glob($this->toString() . '/' . ltrim($mask, '/'),
 			GLOB_NOSORT | GLOB_BRACE) as $path){
 				yield Path::create($path);
@@ -101,7 +104,7 @@ final class Directory extends ANode
 
 	/**
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function isEmpty(): bool {
 		foreach ($this->list() as $Path){
@@ -115,7 +118,7 @@ final class Directory extends ANode
 
 	/**
 	 * @return int
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function count(): int {
 		return count(array_filter(scandir($this->assemble()), function(){
@@ -124,7 +127,7 @@ final class Directory extends ANode
 
 	/**
 	 * @return int
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getModifiedTime() {
 		return (int)filemtime($this->assemble());
@@ -132,7 +135,7 @@ final class Directory extends ANode
 
 	/**
 	 * @return int
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function getSize(): int {
 		return $this->count();
@@ -140,14 +143,14 @@ final class Directory extends ANode
 
 	/**
 	 * @return void
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function clear(): void {
 		foreach ($this->list() as $Path){
 			if (!$Path->isDot()) {
 
 				if ($Path->isLink()) {
-					throw new \Exception('Cannot remove the link: ' . $Path->toString());
+					throw new Exception('Cannot remove the link: ' . $Path->toString());
 				}
 
 				if ($Path->isDirectory()) {
@@ -161,23 +164,23 @@ final class Directory extends ANode
 
 	/**
 	 * @return void
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function remove(): void {
 		$this->clear();
 
 		if (!@rmdir($this->assemble())){
-			throw new \Exception('Cannot remove the directory: ' . $this->toString());
+			throw new Exception('Cannot remove the directory: ' . $this->toString());
 		}
 	}
 
 	/**
 	 * @param string $name
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function rename(string $name): void {
 		rename($this->assemble(), $this->toPath()->changeEnding($name)->try(function(){
-			throw new \Exception('Destination already exists!');
+			throw new Exception('Destination already exists!');
 		}, Path::TIF_EXIST)->toString());
 	}
 
@@ -185,14 +188,14 @@ final class Directory extends ANode
 	 * @param IPatchable $Destination
 	 * @param bool $rewrite
 	 * @return void
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function copy(IPatchable $Destination, bool $rewrite = false): void {
 		$this->clone($Destination->toPath()->try(function(){
-			throw new \Exception('Destination is not exists or not writable!');
+			throw new Exception('Destination is not exists or not writable!');
 		}, Path::TIF_NOT_WRITABLE | Path::TIF_DOT)->append($this->getBaseName())->try(function(Path $Path) use ($rewrite) {
 			if (!$rewrite){
-				throw new \Exception('Destination is already exists!');
+				throw new Exception('Destination is already exists!');
 			} else {
 				$Path->toDirectory()->clear();
 			}
@@ -202,11 +205,11 @@ final class Directory extends ANode
 	/**
 	 * @param Directory $Destination
 	 * @return void
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function clone(Directory $Destination): void {
 		if (!$Destination->isEmpty()){
-			throw new \Exception('Destination is not empty!');
+			throw new Exception('Destination is not empty!');
 		}
 
 		foreach ($this->list() as $Path) {
@@ -222,7 +225,7 @@ final class Directory extends ANode
 
 	/**
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function toString(): string {
 		return parent::toString() . DIRECTORY_SEPARATOR;

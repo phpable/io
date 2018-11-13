@@ -8,6 +8,9 @@ use \Able\IO\Abstractions\AAccessor;
 
 use \Able\Helpers\Str;
 
+use \Exception;
+use \Generator;
+
 class Writer extends AAccessor
 	implements IWriter {
 
@@ -32,13 +35,14 @@ class Writer extends AAccessor
 	public const WM_SKIP_ENDING = 0b1000;
 
 	/**
-	 * @param \Generator $Input
+	 * @param Generator $Input
 	 * @param int $mode
-	 * @throws \Exception
+	 *
+	 * @throws Exception
 	 */
-	public final function write(\Generator $Input, int $mode = 0): void {
+	public final function write(Generator $Input, int $mode = 0): void {
 		if (!is_resource($handler = fopen($this->File->toString(), 'r+'))){
-			throw new \Exception('Invalid source!');
+			throw new Exception('Invalid source!');
 		}
 
 		try{

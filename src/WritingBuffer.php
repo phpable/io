@@ -11,6 +11,9 @@ use \Able\IO\Abstractions\ISource;
 
 use \Able\Helpers\Str;
 
+use \Exception;
+use \Generator;
+
 /**
  * @method WritingBuffer process(callable $Handler)
  */
@@ -18,10 +21,10 @@ class WritingBuffer extends ABuffer
 	implements IWriter, ISource {
 
 	/**
-	 * @param \Generator $Source
+	 * @param Generator $Source
 	 * @return WritingBuffer
 	 */
-	public final static function create(\Generator $Source){
+	public final static function create(Generator $Source){
 		($Buffer = new static())->write($Source);
 		return $Buffer;
 	}
@@ -32,11 +35,11 @@ class WritingBuffer extends ABuffer
 	public const WM_PREPEND = 0b0001;
 
 	/**
-	 * @param \Generator $Input
+	 * @param Generator $Input
 	 * @param int $mode
 	 * @return void
 	 */
-	public final function write(\Generator $Input, int $mode = 0): void {
+	public final function write(Generator $Input, int $mode = 0): void {
 		if ($mode & self::WM_PREPEND) {
 			$this->Buffer = Str::unbreak(Str::collect($Input), 1)
 				. PHP_EOL . $this->Buffer;
@@ -56,8 +59,8 @@ class WritingBuffer extends ABuffer
 	}
 
 	/**
-	 * @param \Able\IO\File $File
-	 * @throws \Exception
+	 * @param File $File
+	 * @throws Exception
 	 */
 	public final function save(File $File): void {
 		$File->rewrite($this->Buffer);
