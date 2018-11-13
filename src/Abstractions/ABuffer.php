@@ -6,7 +6,7 @@ abstract class ABuffer {
 	/**
 	 * @var string
 	 */
-	protected $Buffer = '';
+	protected string $Buffer = '';
 
 	/**
 	 * @param callable $Handler

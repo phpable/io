@@ -7,6 +7,8 @@ use \Able\Prototypes\IStringable;
 use \Able\IO\File;
 use \Able\IO\Abstractions\ILocated;
 
+use \Exception;
+
 abstract class AAccessor
 	implements IStringable, ILocated {
 
@@ -15,7 +17,7 @@ abstract class AAccessor
 	/**
 	 * @var File
 	 */
-	protected $File = null;
+	protected File $File;
 
 	/**
 	 * Reader constructor.
@@ -27,7 +29,7 @@ abstract class AAccessor
 
 	/**
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function toString(): string {
 		return $this->File->toString();
@@ -35,7 +37,7 @@ abstract class AAccessor
 
 	/**
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function getLocation(): string {
 		return $this->File->getLocation();
