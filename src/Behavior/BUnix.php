@@ -4,6 +4,8 @@ namespace Able\IO\Behavior;
 use \Able\IO\Abstractions\IBehavior;
 use \Able\IO\Path;
 
+use \Exception;
+
 class BUnix implements IBehavior {
 
 	/**
@@ -25,7 +27,7 @@ class BUnix implements IBehavior {
 	/**
 	 * @param Path $Path
 	 * @return Path
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function makeAbsolute(Path $Path): Path {
 		return $Path->prepend('/');

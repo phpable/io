@@ -4,6 +4,8 @@ namespace Able\IO\Behavior;
 use \Able\IO\Abstractions\IBehavior;
 use \Able\IO\Path;
 
+use \Exception;
+
 class BWindows implements IBehavior {
 
 	/**
@@ -27,11 +29,11 @@ class BWindows implements IBehavior {
 	 * @param Path $Path
 	 * @param string $point
 	 * @return Path
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function changePoint(Path $Path, string $point): Path {
 		if (!preg_match('/^[A-Z]:?\\\?$/', $point)){
-			throw new \Exception('Invalid reference!');
+			throw new Exception('Invalid reference!');
 		}
 
 		return $Path->prepend(rtrim($point, ':\\') . ':');
