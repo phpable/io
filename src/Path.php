@@ -15,8 +15,6 @@ use \Able\IO\File;
 use \Able\IO\Directory;
 use \Able\IO\Abstractions\ANode;
 
-use PHPUnit\Runner\Exception;
-
 class Path extends APath implements IStringable, IArrayable, ICountable {
 	use TStringable;
 
