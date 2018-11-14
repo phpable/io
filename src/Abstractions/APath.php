@@ -13,17 +13,21 @@ use \Able\IO\Abstractions\IPatchable;
 use \Able\IO\Behavior\BUnix;
 use \Able\IO\Behavior\BWindows;
 
-abstract class APath implements ICallable, IBehavior, IPatchable {
+use \Exception;
+
+abstract class APath
+	implements ICallable, IBehavior, IPatchable {
+
 	use TCallable;
 
 	/**
 	 * @var string
 	 */
-	private static $BehaviorClass = null;
+	private static string $BehaviorClass;
 
 	/**
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected final static function detectBehaviorClass(): string {
 		if (!is_null(self::$BehaviorClass)){
@@ -33,7 +37,7 @@ abstract class APath implements ICallable, IBehavior, IPatchable {
 		if (!class_exists(self::$BehaviorClass = Src::lns(__NAMESPACE__)
 			. '\Behavior\B' . ucfirst(Env::name()))){
 
-				throw new \Exception('Unsupported environment!');
+				throw new Exception('Unsupported environment!');
 		}
 
 		return self::$BehaviorClass;
@@ -46,7 +50,7 @@ abstract class APath implements ICallable, IBehavior, IPatchable {
 
 	/**
 	 * @return IBehavior
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected final function getBehavior(): IBehavior {
 		if (is_null($this->Behavior)) {
@@ -60,11 +64,11 @@ abstract class APath implements ICallable, IBehavior, IPatchable {
 	 * @param string $name
 	 * @param array $Args
 	 * @return mixed
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function call(string $name, array $Args = []) {
 		if (!method_exists($this->getBehavior(), $name)){
-			throw new \Exception('Undefined method ' .  $name);
+			throw new Exception('Undefined method ' .  $name);
 		}
 
 		return $this->getBehavior()->{$name}($this, ...$Args);
@@ -73,7 +77,7 @@ abstract class APath implements ICallable, IBehavior, IPatchable {
 	/**
 	 * @param string $fragment
 	 * @return null|string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final static function detectPoint(string $fragment): ?string {
 		return self::detectBehaviorClass()::detectPoint($fragment);
@@ -82,7 +86,7 @@ abstract class APath implements ICallable, IBehavior, IPatchable {
 	/**
 	 * @param string $fragment
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final static function removePoint(string $fragment): string {
 		return self::detectBehaviorClass()::removePoint($fragment);

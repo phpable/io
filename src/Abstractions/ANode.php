@@ -7,6 +7,8 @@ use \Able\Prototypes\TStringable;
 use \Able\IO\Path;
 use \Able\IO\Abstractions\IPatchable;
 
+use \Exception;
+
 abstract class ANode
 	implements IStringable, IPatchable {
 
@@ -15,15 +17,15 @@ abstract class ANode
 	/**
 	 * @var Path
 	 */
-	private $Path = null;
+	private Path $Path;
 
 	/**
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected final function assemble(): string {
 		if (!$this->Path->isReadable()){
-			throw new \Exception('Given path is not exists or not readable: ' . $this->Path . '!');
+			throw new Exception('Given path is not exists or not readable: ' . $this->Path . '!');
 		}
 
 		return $this->Path->toString();
@@ -31,7 +33,7 @@ abstract class ANode
 
 	/**
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function toString(): string {
 		return (string)$this->assemble();
@@ -39,11 +41,11 @@ abstract class ANode
 
 	/**
 	 * @param Path $Path
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __construct(Path $Path) {
 		if (!$Path->isReadable()) {
-			throw new \Exception('Given path is not exists or not readable: ' . $Path . '!');
+			throw new Exception('Given path is not exists or not readable: ' . $Path . '!');
 		}
 
 		$this->Path = $Path;
@@ -58,7 +60,7 @@ abstract class ANode
 
 	/**
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public final function getBaseName(): string {
 		return basename($this->assemble());
