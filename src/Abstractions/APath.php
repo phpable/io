@@ -21,9 +21,9 @@ abstract class APath
 	use TCallable;
 
 	/**
-	 * @var string
+	 * @var string|null
 	 */
-	private static string $BehaviorClass;
+	private static ?string $BehaviorClass = null;
 
 	/**
 	 * @return string
@@ -46,7 +46,7 @@ abstract class APath
 	/**
 	 * @var IBehavior
 	 */
-	private $Behavior = null;
+	private IBehavior $Behavior;
 
 	/**
 	 * @return IBehavior
