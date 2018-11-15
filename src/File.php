@@ -9,7 +9,9 @@ use \Able\IO\Abstractions\IPatchable;
 use \Able\IO\Reader;
 use \Able\IO\Writer;
 use \Able\IO\ReadingBuffer;
+use \Able\IO\ReadingStream;
 use \Able\IO\WritingBuffer;
+
 use \Exception;
 
 final class File extends ANode
@@ -152,6 +154,13 @@ final class File extends ANode
 	 */
 	public final function toReadingBuffer(): ReadingBuffer {
 		return new ReadingBuffer($this);
+	}
+
+	/**
+	 * @return ReadingStream
+	 */
+	public final function toReadingStream(): ReadingStream {
+		return new ReadingStream($this);
 	}
 
 	/**
