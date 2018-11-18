@@ -40,7 +40,7 @@ final class Directory extends ANode
 		}
 
 		if ($Path->isDot()){
-			throw new \Exception(sprintf('Path "%s" is not a directory!', $Path->toString()));
+			throw new \Exception(sprintf('Path "%s" is not a directory or not accessible!', $Path->toString()));
 		}
 
 		if (!$Path->isExists()) {
@@ -117,6 +117,14 @@ final class Directory extends ANode
 	public final function count(): int {
 		return count(array_filter(scandir($this->assemble()), function(){
 			return !preg_match('/^\.+$/', func_get_arg(0)); }), SCANDIR_SORT_NONE);
+	}
+
+	/**
+	 * @return int
+	 * @throws \Exception
+	 */
+	public function getModifiedTime() {
+		return (int)filemtime($this->assemble());
 	}
 
 	/**
