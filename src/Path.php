@@ -346,7 +346,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	/**
 	 * @const int
 	 */
-	public const TIF_READABLE = 0b000010000000;
+	public const TIF_READABLE = 0b000100000000;
 
 	/**
 	 * @const int
