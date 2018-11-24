@@ -17,7 +17,7 @@ class Reader extends AAccessor
 	/**
 	 * @var int
 	 */
-	private $index = self::DEFAULT_INDEX;
+	private int $index = self::DEFAULT_INDEX;
 
 	/**
 	 * @return int
