@@ -13,6 +13,13 @@ abstract class AStreamReader {
 	/**
 	 * @return ReadingStream
 	 */
+	protected final function stream(): ReadingStream {
+		return $this->Stream;
+	}
+
+	/**
+	 * @return ReadingStream
+	 */
 	public final function toReadingStream(): ReadingStream {
 		return clone $this->Stream;
 	}
