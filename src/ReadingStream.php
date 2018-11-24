@@ -6,7 +6,10 @@ use \Able\IO\Abstractions\AStream;
 
 use \Able\Helpers\Str;
 
-class ReadingStream {
+use \Able\Prototypes\IClonable;
+
+class ReadingStream
+	implements IClonable {
 
 	/**
 	 * @var resource
@@ -91,5 +94,12 @@ class ReadingStream {
 	 */
 	public final function rewind(): void {
 		fseek($this->handler, 0);
+	}
+
+	/**
+	 * @return void
+	 */
+	public final function __clone() {
+		$this->rewind();
 	}
 }
