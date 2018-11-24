@@ -58,6 +58,13 @@ class ReadingStream {
 	private int $position = 0;
 
 	/**
+	 * @return int
+	 */
+	public final function getPosition(): int {
+		return $this->position;
+	}
+
+	/**
 	 * @return string|null
 	 */
 	public final function read(): ?string {
