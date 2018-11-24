@@ -85,4 +85,11 @@ class ReadingStream {
 	public final function rollback(): void {
 		fseek($this->handler, $this->position);
 	}
+
+	/**
+	 * @return void
+	 */
+	public final function rewind(): void {
+		fseek($this->handler, 0);
+	}
 }
