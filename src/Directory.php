@@ -117,6 +117,14 @@ final class Directory extends ANode
 	}
 
 	/**
+	 * @return bool
+	 * @throws Exception
+	 */
+	public final function isWritable(): bool {
+		return is_writable($this->toString());
+	}
+
+	/**
 	 * @return int
 	 * @throws Exception
 	 */
