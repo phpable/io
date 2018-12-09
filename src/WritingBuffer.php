@@ -25,30 +25,18 @@ class WritingBuffer extends ABuffer
 	 * @param Generator $Source
 	 * @return WritingBuffer
 	 */
-	public final static function create(Generator $Source){
+	public final static function create(Generator $Source): WritingBuffer {
 		($Buffer = new static())->write($Source);
 		return $Buffer;
 	}
 
 	/**
-	 * @const int
-	 */
-	public const WM_PREPEND = 0b0001;
-
-	/**
 	 * @param Generator $Input
-	 * @param int $mode
 	 * @return void
 	 */
-	public final function write(Generator $Input, int $mode = 0): void {
-		if ($mode & self::WM_PREPEND) {
-			$this->Buffer = Str::unbreak(Str::collect($Input), 1)
-				. PHP_EOL . $this->Buffer;
-		} else {
-			foreach ($Input as $line) {
-				$this->Buffer = $this->Buffer
-					. Str::unbreak($line, 1) . PHP_EOL;
-			}
+	public final function write(Generator $Input): void {
+		foreach ($Input as $index => $line) {
+			$this->Buffer .= rtrim($line, "\n\t") . PHP_EOL;
 		}
 	}
 
