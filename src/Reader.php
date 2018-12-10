@@ -6,8 +6,6 @@ use \Able\IO\File;
 use \Able\IO\Abstractions\IReader;
 use \Able\IO\Abstractions\AAccessor;
 
-use \Able\Helpers\Str;
-
 use \Exception;
 use \Generator;
 
@@ -38,7 +36,7 @@ class Reader extends AAccessor
 		$this->index = 0;
 		try{
 			while(($line = fgets($handler)) !== false){
-				yield ++$this->index => Str::unbreak($line);
+				yield ++$this->index => rtrim($line, "\n\t");
 			}
 		}finally{
 			fclose($handler);
