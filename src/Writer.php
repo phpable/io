@@ -4,6 +4,7 @@ namespace Able\IO;
 use \Able\IO\File;
 
 use \Able\IO\Abstractions\IWriter;
+use \Able\IO\Abstractions\IReader;
 use \Able\IO\Abstractions\AAccessor;
 
 use \Able\Helpers\Str;
@@ -78,6 +79,30 @@ class Writer extends AAccessor
 				}
 			}
 		}finally{
+			fclose($handler);
+		}
+	}
+
+	/**
+	 * @param IReader $Reader
+	 * @throws Exception
+	 */
+	public final function consume(IReader $Reader): void {
+		if (!is_resource($handler = fopen($this->File->toString(), 'r+'))) {
+			throw new Exception('Invalid source!');
+		}
+
+		try {
+
+			/**
+			 * Any line from a reading stream
+			 * is written AS IS without any manipulations.
+			 */
+			foreach ($Reader->read() as $line) {
+				fputs($handler, $line);
+			}
+
+		} catch (\Throwable $Exception) {
 			fclose($handler);
 		}
 	}
