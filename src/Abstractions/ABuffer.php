@@ -9,6 +9,13 @@ abstract class ABuffer {
 	protected string $Buffer = '';
 
 	/**
+	 * @return int
+	 */
+	public final function getLength(): int {
+		return strlen($this->Buffer);
+	}
+
+	/**
 	 * @param callable $Handler
 	 * @return ABuffer
 	 */
