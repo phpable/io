@@ -41,7 +41,7 @@ class Writer extends AAccessor
 	 * @throws Exception
 	 */
 	public final function write(Generator $Input, int $mode = 0): void {
-		if (!is_resource($handler = fopen($this->File->toString(), 'r+'))){
+		if (!is_resource($handler = fopen($this->File->toString(), 'r+'))) {
 			throw new Exception('Invalid source!');
 		}
 
@@ -52,7 +52,7 @@ class Writer extends AAccessor
 				 * If the WP_SKIP_INDENT flag is set any leading
 				 * or ending whitespace characters will be removed.
 				 */
-				if ($mode & self::WM_SKIP_INDENT){
+				if ($mode & self::WM_SKIP_INDENT) {
 					$line = ltrim($line);
 				}
 
@@ -61,7 +61,7 @@ class Writer extends AAccessor
 				 * If the WP_SKIP_INDENT flag is set any leading
 				 * or ending whitespace characters will be removed.
 				 */
-				if ($mode & self::WM_SKIP_ENDING){
+				if ($mode & self::WM_SKIP_ENDING) {
 					$line = rtrim($line);
 				}
 
@@ -70,7 +70,7 @@ class Writer extends AAccessor
 				 * will be ignored.
 				 */
 				if (!empty(trim($line)) || ~$mode & self::WM_SKIP_EMPTY) {
-					if (~$mode & self::WM_REPLACE){
+					if (~$mode & self::WM_REPLACE) {
 						fseek($handler, 0, SEEK_END);
 					}
 
