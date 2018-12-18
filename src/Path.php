@@ -14,6 +14,7 @@ use \Able\IO\Abstractions\APath;
 use \Able\IO\File;
 use \Able\IO\Directory;
 use \Able\IO\Abstractions\ANode;
+
 use \Exception;
 
 class Path extends APath implements IStringable, IArrayable, ICountable {
@@ -100,6 +101,14 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * @return Path
+	 * @throws Exception
+	 */
+	public final function appendRandom(): Path {
+		return $this->append(Str::md5(hrtime(), $this->toString()));
 	}
 
 	/**
