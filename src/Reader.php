@@ -12,11 +12,6 @@ class Reader extends AAccessor
 	implements IReader {
 
 	/**
-	 * @var int
-	 */
-	private $index = 0;
-
-	/**
 	 * @return \Generator
 	 * @throws \Exception
 	 */
@@ -25,9 +20,10 @@ class Reader extends AAccessor
 			throw new \Exception('Invalid source!');
 		}
 
+		$index = 0;
 		try{
 			while(($line = fgets($handler)) !== false){
-				yield ++$this->index => Str::unbreak($line);
+				yield ++$index => Str::unbreak($line);
 			}
 		}finally{
 			fclose($handler);
