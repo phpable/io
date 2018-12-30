@@ -30,24 +30,12 @@ class ReadingContainer
 	}
 
 	/**
-	 * @var int
-	 */
-	private $line = 0;
-
-	/**
-	 * @return int
-	 */
-	public final function getLine(): int {
-		return $this->line;
-	}
-
-	/**
 	 * @return \Generator
 	 */
 	public final function read(): \Generator {
 		while(count($this->Collection) > 0){
-			foreach ($this->Collection[0]->read() as $this->line => $line){
-				yield $line;
+			foreach ($this->Collection[0]->read() as $index => $line){
+				yield $index => $line;
 			}
 
 			array_shift($this->Collection);
