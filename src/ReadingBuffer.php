@@ -18,7 +18,7 @@ class ReadingBuffer extends ABuffer
 	/**
 	 * @var null
 	 */
-	private $location = 'Unknown';
+	private $location = self::DEFAULT_LOCATION;
 
 	/**
 	 * @return string
@@ -56,7 +56,9 @@ class ReadingBuffer extends ABuffer
 	 * @throws \Exception
 	 */
 	public final function read(): \Generator {
-		yield from Regexp::create('/(?:\r\n|\n|\r)/')->split($this->Buffer);
+		foreach (Regexp::create('/(?:\r\n|\n|\r)/')->split($this->Buffer) as $index => $line){
+			yield ++$index => $line;
+		}
 	}
 
 	/**

@@ -27,6 +27,7 @@ abstract class AAccessor
 
 	/**
 	 * @return string
+	 * @throws \Exception
 	 */
 	public final function toString(): string {
 		return $this->File->toString();
