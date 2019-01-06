@@ -75,7 +75,7 @@ class Writer extends AAccessor
 						fseek($handler, 0, SEEK_END);
 					}
 
-					fputs($handler, Str::break($line));
+					fputs($handler, rtrim($line, "\n\t") . PHP_EOL);
 				}
 			}
 		}finally{
@@ -99,7 +99,7 @@ class Writer extends AAccessor
 			 * is written AS IS without any manipulations.
 			 */
 			foreach ($Reader->read() as $line) {
-				fputs($handler, $line);
+				fputs($handler, rtrim($line, "\n\t") . PHP_EOL);
 			}
 
 		} catch (\Throwable $Exception) {
