@@ -12,18 +12,30 @@ class Reader extends AAccessor
 	implements IReader {
 
 	/**
+	 * @var int
+	 */
+	private $index = self::DEFAULT_INDEX;
+
+	/**
+	 * @return int
+	 */
+	public final function getIndex(): int {
+		return $this->index;
+	}
+
+	/**
 	 * @return \Generator
 	 * @throws \Exception
 	 */
-	public final function read(): \Generator {
+	public function read(): \Generator {
 		if (!is_resource($handler = fopen($this->File->toString(), 'r'))){
 			throw new \Exception('Invalid source!');
 		}
 
-		$index = 0;
+		$this->index = 0;
 		try{
 			while(($line = fgets($handler)) !== false){
-				yield ++$index => Str::unbreak($line);
+				yield ++$this->index => Str::unbreak($line);
 			}
 		}finally{
 			fclose($handler);

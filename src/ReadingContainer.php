@@ -54,6 +54,17 @@ class ReadingContainer
 	}
 
 	/**
+	 * @return int
+	 */
+	public final function getIndex(): int {
+		if (!empty($this->Collection)){
+			return $this->Collection[0]->getIndex();
+		}
+
+		return self::DEFAULT_INDEX;
+	}
+
+	/**
 	 * @return \Generator
 	 * @throws \Exception
 	 */

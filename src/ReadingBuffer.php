@@ -30,7 +30,7 @@ class ReadingBuffer extends ABuffer
 	/**
 	 * @var int
 	 */
-	private $index = 0;
+	private $index = self::DEFAULT_INDEX;
 
 	/**
 	 * @return int
