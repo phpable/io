@@ -30,24 +30,27 @@ class ReadingContainer
 	}
 
 	/**
+	 * @var int
+	 */
+	private $active = -1;
+
+	/**
 	 * @return \Generator
 	 */
 	public final function read(): \Generator {
-		while(count($this->Collection) > 0){
-			foreach ($this->Collection[0]->read() as $index => $line){
-				yield $index => $line;
-			}
-
-			array_shift($this->Collection);
+		foreach ($this->Collection as $this->active => $Reader){
+			yield from $Reader->read();
 		}
+
+		$this->active = -1;
 	}
 
 	/**
 	 * @return string
 	 */
 	public final function getLocation(): string {
-		if (!empty($this->Collection)){
-			return $this->Collection[0]->getLocation();
+		if (isset($this->Collection[$this->active])){
+			return $this->Collection[$this->active]->getLocation();
 		}
 
 		return self::DEFAULT_LOCATION;
@@ -57,8 +60,8 @@ class ReadingContainer
 	 * @return int
 	 */
 	public final function getIndex(): int {
-		if (!empty($this->Collection)){
-			return $this->Collection[0]->getIndex();
+		if (isset($this->Collection[$this->active])){
+			return $this->Collection[$this->active]->getIndex();
 		}
 
 		return self::DEFAULT_INDEX;
