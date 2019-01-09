@@ -28,6 +28,18 @@ class ReadingBuffer extends ABuffer
 	}
 
 	/**
+	 * @var int
+	 */
+	private $index = 0;
+
+	/**
+	 * @return int
+	 */
+	public final function getIndex(): int {
+		return $this->Index;
+	}
+
+	/**
 	 * Buffer constructor.
 	 * @param ISource $Source
 	 */
@@ -55,9 +67,11 @@ class ReadingBuffer extends ABuffer
 	 * @return \Generator
 	 * @throws \Exception
 	 */
-	public final function read(): \Generator {
-		foreach (Regexp::create('/(?:\r\n|\n|\r)/')->split($this->Buffer) as $index => $line){
-			yield ++$index => $line;
+	public function read(): \Generator {
+		$this->index = 0;
+
+		foreach (Regexp::create('/(?:\r\n|\n|\r)/')->split($this->Buffer) as $line){
+			yield ++$this->index => $line;
 		}
 	}
 
