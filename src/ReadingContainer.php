@@ -37,7 +37,7 @@ class ReadingContainer
 	/**
 	 * @return \Generator
 	 */
-	public final function read(): \Generator {
+	public function read(): \Generator {
 		foreach ($this->Collection as $this->active => $Reader){
 			yield from $Reader->read();
 		}
