@@ -42,7 +42,7 @@ final class File extends ANode
 	 * @throws Exception
 	 */
 	public final function purge(): File {
-		file_put_contents($this->assemble(), '');
+		file_purge($this->assemble(), LOCK_EX);
 		return $this;
 	}
 
@@ -82,6 +82,8 @@ final class File extends ANode
 	 * @throws Exception
 	 */
 	public final function rewrite(string $content): void {
+		$this->purge();
+
 		file_put_contents($this->assemble(),
 			$content, LOCK_EX);
 	}
