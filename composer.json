@@ -13,6 +13,7 @@
 	"require": {
 		"php": ">=7.4.0",
 		"ext-fileinfo": "*",
+		"able/fixes": "dev-master",
 		"able/prototypes": "dev-master",
 		"able/helpers": "dev-master"
 	},
