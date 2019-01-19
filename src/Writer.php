@@ -42,7 +42,7 @@ class Writer extends AAccessor
 	 * @throws Exception
 	 */
 	public final function write(Generator $Input, int $mode = 0): void {
-		if (!is_resource($handler = fopen($this->File->toString(), 'r+'))) {
+		if (!is_resource($handler = fopen($this->File->toString(), 'a'))) {
 			throw new Exception('Invalid source!');
 		}
 
@@ -88,7 +88,7 @@ class Writer extends AAccessor
 	 * @throws Exception
 	 */
 	public final function consume(IReader $Reader): void {
-		if (!is_resource($handler = fopen($this->File->toString(), 'r+'))) {
+		if (!is_resource($handler = fopen($this->File->toString(), 'a'))) {
 			throw new Exception('Invalid source!');
 		}
 
