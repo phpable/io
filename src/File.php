@@ -62,8 +62,9 @@ final class File extends ANode
 	 * @throws Exception
 	 */
 	public final function rename(string $name): void {
-		rename($this->assemble(), $this->toPath()->changeEnding($name)->try(function(){
-			throw new Exception('Destination already exists!');
+		rename($this->assemble(), $this->toPath()->changeEnding($name)
+			->try(function(Path $Path) {
+				throw new Exception(sprintf('File already exists: %s!', $Path));
 		}, Path::TIF_EXIST)->toString());
 	}
 
