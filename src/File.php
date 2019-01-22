@@ -175,13 +175,28 @@ final class File extends ANode
 	 * @param IPatchable $Destination
 	 * @param bool $rewrite
 	 * @return void
+	 *
 	 * @throws Exception
 	 */
 	public final function copy(IPatchable $Destination, bool $rewrite = false): void {
-		copy($this->assemble(), $Destination->toPath()->try(function(){
-			throw new Exception('Destination is not exists or not writable!');
-		}, Path::TIF_NOT_WRITABLE)->append($this->getBaseName())->try(function() use ($rewrite) {
-			if (!$rewrite) { throw new Exception('Destination is already exist!');
-		}}, Path::TIF_EXIST));
+		copy($this->assemble(), $Destination->toPath()
+			->try(function (Path $Path) {
+				$Path->append($this->getBaseName());
+		}, Path::TIF_DIRECTORY)
+			->try(function() use ($rewrite) {
+
+				if (!$rewrite) {
+					throw new Exception('Destination already exists!');
+				}
+		}, Path::TIF_EXIST));
+	}
+
+	/**
+	 * @param IPatchable $Destination
+	 * @throws Exception
+	 */
+	public final function move(IPatchable $Destination): void {
+		$this->copy($Destination, true);
+		$this->remove();
 	}
 }
