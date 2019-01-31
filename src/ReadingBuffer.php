@@ -43,7 +43,6 @@ class ReadingBuffer extends ABuffer
 	}
 
 	/**
-	 * Buffer constructor.
 	 * @param ISource $Source
 	 */
 	public function __construct(ISource $Source) {
