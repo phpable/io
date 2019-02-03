@@ -33,7 +33,7 @@ abstract class ANode
 	 * @return string
 	 * @throws \Exception
 	 */
-	public final function toString(): string {
+	public function toString(): string {
 		return (string)$this->assemble();
 	}
 
