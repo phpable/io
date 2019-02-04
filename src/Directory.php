@@ -216,4 +216,12 @@ final class Directory extends ANode
 			}
 		}
 	}
+
+	/**
+	 * @return string
+	 * @throws \Exception
+	 */
+	public final function toString(): string {
+		return parent::toString() . DIRECTORY_SEPARATOR;
+	}
 }
