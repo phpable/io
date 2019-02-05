@@ -221,6 +221,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * Checks if the path matches a mask.
 	 * @param string $mask
 	 * @return bool
 	 */
@@ -229,8 +230,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
-	 * Determines if a path exists.
-	 *
+	 * Checks if the path exists.
 	 * @return bool
 	 */
 	public final function isExists() : bool {
@@ -238,6 +238,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * Checks if the path is a directory.
 	 * @return bool
 	 */
 	public final function isDirectory() : bool {
@@ -245,6 +246,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * Determines if the path is a regular file.
 	 * @return bool
 	 */
 	public final function isFile() : bool {
@@ -252,6 +254,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * Determines if the current path is a symbolic link.
 	 * @return bool
 	 */
 	public final function isLink() : bool {
@@ -259,6 +262,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * Determines if the current path is writable.
 	 * @return bool
 	 */
 	public final function isWritable() : bool {
@@ -266,6 +270,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * Determines if the current path is readable.
 	 * @return bool
 	 */
 	public final function isReadable() : bool {
@@ -273,13 +278,23 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * Determines if current path is '.' or '..'.
 	 * @return bool
 	 */
 	public final function isDot() : bool {
-		return preg_match('/^\.{1,2}$/', Arr::last($this->Fragments)) > 0;
+		return preg_match('/^\.{1,2}$/', $this->getEnding()) > 0;
 	}
 
 	/**
+	 * Determines if the right fragment of the current path is starting from the dot character.
+	 * @return bool
+	 */
+	public final function isHidden() : bool {
+		return preg_match('/^\./', $this->getEnding()) > 0;
+	}
+
+	/**
+	 * Determines if the current path is a child of another one path.
 	 * @param Path $Path
 	 * @return bool
 	 */
@@ -288,6 +303,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * Determines if the current path is a parent of another one path.
 	 * @param Path $Path
 	 * @return bool
 	 */
@@ -296,6 +312,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	}
 
 	/**
+	 * Determines if path is equal to another one path.
 	 * @param Path $Path
 	 * @return bool
 	 */
