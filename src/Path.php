@@ -225,7 +225,7 @@ class Path extends APath implements IStringable, IArrayable, ICountable {
 	 * @return bool
 	 */
 	public final function isMatch(string $mask): bool {
-		return fnmatch($mask, $this->toString());
+		return fnmatch($mask, $this->toString(), FNM_PATHNAME);
 	}
 
 	/**
