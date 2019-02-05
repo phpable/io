@@ -2,6 +2,7 @@
 namespace Able\IO;
 
 use \Able\Helpers\Fs;
+use \Able\Helpers\Str;
 
 use \Able\Prototypes\ICountable;
 
@@ -77,6 +78,8 @@ final class Directory extends ANode
 	 * @throws \Exception
 	 */
 	public final function filter(string $mask): \Generator {
+		$mask = Str::mleft($mask, $this->toString());
+
 		foreach ($this->list() as $Path){
 			if ($Path->isMatch($mask)){
 				yield $Path;
