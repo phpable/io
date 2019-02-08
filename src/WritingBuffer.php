@@ -22,6 +22,17 @@ class WritingBuffer extends ABuffer
 	implements IWriter, ISource {
 
 	/**
+	 * WritingBuffer constructor.
+	 * @param Generator|null $Source
+	 */
+	public function __construct(?Generator $Source = null) {
+		if (!is_null($Source)) {
+			$this->write($Source);
+		}
+	}
+
+
+	/**
 	 * @param Generator $Source
 	 * @return WritingBuffer
 	 */
