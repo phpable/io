@@ -2,6 +2,7 @@
 namespace Able\IO;
 
 use \Able\IO\Abstractions\ISource;
+use \Able\IO\ReadingBuffer;
 
 class StringSource
 	implements ISource {
@@ -23,5 +24,12 @@ class StringSource
 	 */
 	public final function getContent(): string {
 		return $this->content;
+	}
+
+	/**
+	 * @return ReadingBuffer
+	 */
+	public final function toReadingBuffer(): ReadingBuffer {
+		return new ReadingBuffer($this);
 	}
 }
