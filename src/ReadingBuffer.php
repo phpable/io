@@ -7,7 +7,7 @@ use \Able\IO\Abstractions\IReader;
 use \Able\IO\Abstractions\ISource;
 use \Able\IO\Abstractions\ABuffer;
 
-use \Able\Reglib\Regexp;
+use \Able\Reglib\Regex;
 
 /**
  * @method ReadingBuffer process(callable $Handler)
@@ -70,7 +70,7 @@ class ReadingBuffer extends ABuffer
 	public function read(): \Generator {
 		$this->index = 0;
 
-		foreach (Regexp::create('/(?:\r\n|\n|\r)/')->split($this->Buffer) as $line){
+		foreach (Regex::create('/(?:\r\n|\n|\r)/')->split($this->Buffer) as $line){
 			yield ++$this->index => $line;
 		}
 	}

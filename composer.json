@@ -1,6 +1,5 @@
 {
 	"name": "able/io",
-	"version": "1.0",
 	"type": "library",
 	"keywords": ["phpable", "filesystem", "input", "output"],
 	"description": "phpABLE file-system library",
