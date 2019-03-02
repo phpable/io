@@ -18,13 +18,6 @@ abstract class AStreamReader {
 	}
 
 	/**
-	 * @return ReadingStream
-	 */
-	public final function toReadingStream(): ReadingStream {
-		return clone $this->Stream;
-	}
-
-	/**
 	 * @param ReadingStream $Stream
 	 */
 	public function __construct(ReadingStream $Stream) {
