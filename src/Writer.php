@@ -7,8 +7,6 @@ use \Able\IO\Abstractions\IWriter;
 use \Able\IO\Abstractions\IReader;
 use \Able\IO\Abstractions\AAccessor;
 
-use \Able\Helpers\Str;
-
 use \Exception;
 use \Generator;
 
@@ -18,7 +16,7 @@ class Writer extends AAccessor
 	/**
 	 * @const int
 	 */
-	public const WM_REPLACE = 0b0001;
+	public const WM_SKIP_BREAKS = 0b0001;
 
 	/**
 	 * @const int
@@ -50,32 +48,37 @@ class Writer extends AAccessor
 			foreach ($Input as $line) {
 
 				/**
-				 * If the WP_SKIP_INDENT flag is set any leading
-				 * or ending whitespace characters will be removed.
+				 * If the WP_SKIP_INDENT flag is set on,
+				 * leading whitespace characters are removed.
 				 */
 				if ($mode & self::WM_SKIP_INDENT) {
 					$line = ltrim($line);
 				}
 
-
 				/**
-				 * If the WP_SKIP_INDENT flag is set any leading
-				 * or ending whitespace characters will be removed.
+				 * If the WM_SKIP_ENDING flag is set on,
+				 * ending whitespace characters are removed.
 				 */
 				if ($mode & self::WM_SKIP_ENDING) {
 					$line = rtrim($line);
 				}
 
 				/**
-				 * if the WP_SKIP_EMPTY flag is set, any empty strings
-				 * will be ignored.
+				 * If the WP_SKIP_EMPTY flag is set on,
+				 * empty strings are ignored.
 				 */
-				if (!empty(trim($line)) || ~$mode & self::WM_SKIP_EMPTY) {
-					if (~$mode & self::WM_REPLACE) {
-						fseek($handler, 0, SEEK_END);
-					}
+				if (!empty(trim($line))
+					|| ~$mode & self::WM_SKIP_EMPTY) {
 
-					fputs($handler, rtrim($line, "\n\t") . PHP_EOL);
+						fwrite($handler, rtrim($line, "\n\t"));
+
+						/**
+						 * If the WM_SKIP_BREAKS flag is set on,
+						 * EOL characters are ignored.
+						 */
+						if (~$mode & self::WM_SKIP_BREAKS) {
+							fwrite($handler, PHP_EOL);
+						}
 				}
 			}
 		}finally{
@@ -95,8 +98,8 @@ class Writer extends AAccessor
 		try {
 
 			/**
-			 * Any line from a reading stream
-			 * is written AS IS without any manipulations.
+			 * Each line from a reader consuming AS IS
+			 * without changes and transformations.
 			 */
 			foreach ($Reader->read() as $line) {
 				fputs($handler, rtrim($line, "\n\t") . PHP_EOL);
