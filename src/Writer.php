@@ -74,7 +74,7 @@ class Writer extends AAccessor
 
 						/**
 						 * If the WM_SKIP_BREAKS flag is set on,
-						 * EOL characters are ignored.
+						 * no EOL characters will be added.
 						 */
 						if (~$mode & self::WM_SKIP_BREAKS) {
 							fwrite($handler, PHP_EOL);
