@@ -70,7 +70,7 @@ class Writer extends AAccessor
 				if (!empty(trim($line))
 					|| ~$mode & self::WM_SKIP_EMPTY) {
 
-						fwrite($handler, rtrim($line, "\n\t"));
+						fwrite($handler, $line);
 
 						/**
 						 * If the WM_SKIP_BREAKS flag is set on,
@@ -81,7 +81,7 @@ class Writer extends AAccessor
 						}
 				}
 			}
-		}finally{
+		} finally {
 			fclose($handler);
 		}
 	}
