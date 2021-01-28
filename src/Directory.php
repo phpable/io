@@ -60,6 +60,20 @@ final class Directory extends ANode
 	}
 
 	/**
+	 * @param Path $Path
+	 * @return void
+	 *
+	 * @throws Exception
+	 */
+	protected final function replacePath(Path $Path): void {
+		if (!$Path->isDirectory()) {
+			throw new Exception(sprintf('Given path is not a directory: %s!', $Path));
+		}
+
+		parent::replacePath($Path);
+	}
+
+	/**
 	 * @return Generator
 	 * @throws Exception
 	 */

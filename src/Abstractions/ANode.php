@@ -52,6 +52,18 @@ abstract class ANode
 	}
 
 	/**
+	 * @param Path $Path
+	 * @throws Exception
+	 */
+	protected function replacePath(Path $Path): void {
+		if (!$Path->isExists()) {
+			throw new Exception(sprintf('Given path is not exists or not readable: %s!', $Path));
+		}
+
+		$this->Path = $Path;
+	}
+
+	/**
 	 * @return Path
 	 */
 	public final function toPath(): Path {
