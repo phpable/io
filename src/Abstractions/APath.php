@@ -53,7 +53,7 @@ abstract class APath
 	 * @throws Exception
 	 */
 	protected final function getBehavior(): IBehavior {
-		if (is_null($this->Behavior)) {
+		if (!isset($this->Behavior)) {
 			$this->Behavior = Src::make(self::detectBehaviorClass());
 		}
 
@@ -66,7 +66,7 @@ abstract class APath
 	 * @return mixed
 	 * @throws Exception
 	 */
-	public final function call(string $name, array $Args = []) {
+	public final function call(string $name, array $Args = []): mixed {
 		if (!method_exists($this->getBehavior(), $name)){
 			throw new Exception('Undefined method ' .  $name);
 		}
