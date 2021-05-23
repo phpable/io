@@ -15,7 +15,7 @@
 		"ext-fileinfo": "*",
 		"able/fixes": "^1.0.0",
 		"able/prototypes": "^1.1.1",
-		"able/helpers": "^0.8.7"
+		"able/helpers": "^0.9.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^9.5"
