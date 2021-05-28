@@ -64,7 +64,7 @@ abstract class APath
 	 * @return mixed
 	 * @throws Exception
 	 */
-	public final function call(string $name, array $Args = []) {
+	public final function call(string $name, array $Args = []): mixed {
 		if (!method_exists($this->getBehavior(), $name)){
 			throw new Exception('Undefined method ' .  $name);
 		}
