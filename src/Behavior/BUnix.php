@@ -21,7 +21,7 @@ class BUnix implements IBehavior {
 	 * @return string
 	 */
 	public final static function removePoint(string $fragment): string{
-		return preg_replace('/^\\/+/', null, $fragment);
+		return preg_replace('/^\\/+/', '', $fragment);
 	}
 
 	/**

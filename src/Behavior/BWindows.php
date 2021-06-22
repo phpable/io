@@ -22,7 +22,7 @@ class BWindows implements IBehavior {
 	 * @return string
 	 */
 	public final static function removePoint(string $fragment): string{
-		return preg_replace('/^[A-Z]:\\\*/', null, $fragment);
+		return preg_replace('/^[A-Z]:\\\*/', '', $fragment);
 	}
 
 	/**
