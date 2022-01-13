@@ -100,7 +100,7 @@ class ReadingStream
 	/**
 	 * @return void
 	 */
-	public final function __clone() {
+	public final function __clone(): void {
 		$this->rewind();
 	}
 }

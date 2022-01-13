@@ -38,6 +38,20 @@ final class File extends ANode
 	}
 
 	/**
+	 * @param Path $Path
+	 * @return void
+	 *
+	 * @throws Exception
+	 */
+	protected final function replacePath(Path $Path): void {
+		if (!$Path->isFile()) {
+			throw new Exception(sprintf('Given path is not a file: %s!', $Path));
+		}
+
+		parent::replacePath($Path);
+	}
+
+	/**
 	 * @return File
 	 * @throws Exception
 	 */
@@ -182,24 +196,54 @@ final class File extends ANode
 	 * @throws Exception
 	 */
 	public final function copy(IPatchable $Destination, bool $rewrite = false): void {
-		copy($this->assemble(), $Destination->toPath()
+		$Target = $Destination->toPath()
 			->try(function (Path $Path) {
 				$Path->append($this->getBaseName());
 		}, Path::TIF_DIRECTORY)
 			->try(function() use ($rewrite) {
 
+				/**
+				 * The file overwriting is disabled by default
+				 * because of security precautions.
+				 */
 				if (!$rewrite) {
 					throw new Exception('Destination already exists!');
 				}
-		}, Path::TIF_EXIST));
+		}, Path::TIF_EXIST);
+
+		/**
+		 * The object always follows the last version of the file.
+		 */
+		if (copy($this->assemble(), $Target->toString())) {
+			$this->replacePath($Target);
+		}
 	}
 
 	/**
 	 * @param IPatchable $Destination
 	 * @throws Exception
 	 */
-	public final function move(IPatchable $Destination): void {
-		$this->copy($Destination, true);
-		$this->remove();
+	public final function move(IPatchable $Destination, bool $rewrite = false): void {
+		$Target = $Destination->toPath()
+			->try(function (Path $Path) {
+				$Path->append($this->getBaseName());
+		}, Path::TIF_DIRECTORY)
+			->try(function() use ($rewrite) {
+
+				/**
+				 * The file overwriting is disabled by default
+				 * because of security precautions.
+				 */
+				if (!$rewrite) {
+					throw new Exception('Destination already exists!');
+				}
+		}, Path::TIF_EXIST);
+
+		/**
+		 * The object always follows the last version of the file.
+		 */
+		if (rename($this->assemble(), $Target->toString())) {
+			$this->replacePath($Target);
+		}
 	}
 }

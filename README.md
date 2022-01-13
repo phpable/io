@@ -2,7 +2,7 @@
 The phpABLE filesystem library. 
 
 ## Requirements
-* PHP >= 7.2.0
+* PHP >= 8.0.0
 * [able/helpers](https://github.com/phpable/helpers)
 * [able/protorypes](https://github.com/phpable/protorypes)
 

@@ -21,23 +21,21 @@ abstract class APath
 	use TCallable;
 
 	/**
-	 * @var string|null
+	 * @var string
 	 */
-	private static ?string $BehaviorClass = null;
+	private static string $BehaviorClass;
 
 	/**
 	 * @return string
 	 * @throws Exception
 	 */
 	protected final static function detectBehaviorClass(): string {
-		if (!is_null(self::$BehaviorClass)){
-			return self::$BehaviorClass;
-		}
+		if (!isset(self::$BehaviorClass)) {
+			self::$BehaviorClass = sprintf('%s\Behavior\B%s', Src::lns(__NAMESPACE__), ucfirst(Env::name()));
 
-		if (!class_exists(self::$BehaviorClass = Src::lns(__NAMESPACE__)
-			. '\Behavior\B' . ucfirst(Env::name()))){
-
+			if (!class_exists(self::$BehaviorClass)) {
 				throw new Exception('Unsupported environment!');
+			}
 		}
 
 		return self::$BehaviorClass;
@@ -53,7 +51,7 @@ abstract class APath
 	 * @throws Exception
 	 */
 	protected final function getBehavior(): IBehavior {
-		if (is_null($this->Behavior)) {
+		if (!isset($this->Behavior)) {
 			$this->Behavior = Src::make(self::detectBehaviorClass());
 		}
 
@@ -66,7 +64,7 @@ abstract class APath
 	 * @return mixed
 	 * @throws Exception
 	 */
-	public final function call(string $name, array $Args = []) {
+	public final function call(string $name, array $Args = []): mixed {
 		if (!method_exists($this->getBehavior(), $name)){
 			throw new Exception('Undefined method ' .  $name);
 		}

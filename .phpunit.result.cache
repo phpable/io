@@ -1,0 +1,1 @@
+{"version":1,"defects":{"Able\\Struct\\Tests\\PathTest::testPlatformFeatures":4},"times":{"Able\\Struct\\Tests\\PathTest::testCreateFromString":0.323,"Able\\Struct\\Tests\\PathTest::testCreateFromArray":0,"Able\\Struct\\Tests\\PathTest::testHierarchy":0,"Able\\Struct\\Tests\\PathTest::testPlatformFeatures":0}}
